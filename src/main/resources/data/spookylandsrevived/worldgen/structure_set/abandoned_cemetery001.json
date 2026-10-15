@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "spookylandsrevived:abandoned_cemetery001",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 7057070,
+    "spacing": 30,
+    "separation": 18
+  }
+}
