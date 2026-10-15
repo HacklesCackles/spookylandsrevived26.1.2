@@ -1,25 +1,22 @@
+# SpookyLandsRevived
 
-Installation information
-=======
+A NeoForge mod for Minecraft 26.1.2 that adds spooky structures to the world:
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+- **Abandoned house** (`abandonedhouse_001`)
+- **Tower dungeon** (`tower_dungeon001`)
+- **Spider den** (`spider_den001`)
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+All structures are data driven (jigsaw structures, template pools, structure sets and biome tags
+under `src/main/resources/data/spookylandsrevived`).
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## Building
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+```
+gradlew build
+```
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+The jar is written to `build/libs`. Use `gradlew runClient` to test in a dev client.
+
+## License
+
+MIT. `TEMPLATE_LICENSE.txt` is the license of the NeoForged MDK template this project started from.
