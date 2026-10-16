@@ -15,8 +15,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @EventBusSubscriber(modid = "spookylandsrevived")
 public class GallowsInjector {
@@ -24,7 +27,7 @@ public class GallowsInjector {
     private static final String MODID = "spookylandsrevived";
     private static final String STRUCTURE = MODID + ":village/plains/gallows";
 
-    // village style -> processor list name (null = vanilla mossify for plains)
+    // village style -> processor list name
     private static final Map<String, String> STYLES = Map.of(
             "plains", "minecraft:mossify_10_percent",
             "desert", MODID + ":gallows_desert",
@@ -32,8 +35,20 @@ public class GallowsInjector {
             "snowy", MODID + ":gallows_snowy",
             "taiga", MODID + ":gallows_taiga");
 
+    // The gallows pool elements we injected (compared by identity). Read by JigsawPlacerMixin
+    // from worldgen threads, so it is built fully and then swapped in.
+    private static volatile Set<StructurePoolElement> gallowsElements = Set.of();
+
+    /** True if this pool element is one of our injected gallows. */
+    public static boolean isGallows(StructurePoolElement element) {
+        return gallowsElements.contains(element);
+    }
+
     @SubscribeEvent
     public static void onServerAboutToStart(ServerAboutToStartEvent event) {
+        Set<StructurePoolElement> injected = Collections.newSetFromMap(new IdentityHashMap<>());
+        gallowsElements = injected;
+
         int weight = Config.GALLOWS_WEIGHT.get();   // 0 = disabled
         if (weight <= 0) return;
 
@@ -52,6 +67,8 @@ public class GallowsInjector {
             StructurePoolElement element = SinglePoolElement
                     .legacy(STRUCTURE, proc)
                     .apply(StructureTemplatePool.Projection.RIGID);
+
+            injected.add(element);
 
             // weighted lookup list used when picking
             for (int i = 0; i < weight; i++) pool.templates.add(element);
