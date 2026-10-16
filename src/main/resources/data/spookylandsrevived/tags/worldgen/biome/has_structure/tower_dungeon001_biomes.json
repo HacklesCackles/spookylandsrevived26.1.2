@@ -34,6 +34,7 @@
     { "id": "biomesoplenty:seasonal_forest", "required": false },
     { "id": "biomesoplenty:woodland", "required": false },
     { "id": "biomesoplenty:fir_clearing", "required": false },
-    { "id": "biomesoplenty:ominous_woods", "required": false }
+    { "id": "biomesoplenty:ominous_woods", "required": false },
+    { "id": "biomesoplenty:dead_forest", "required": false }
   ]
 }

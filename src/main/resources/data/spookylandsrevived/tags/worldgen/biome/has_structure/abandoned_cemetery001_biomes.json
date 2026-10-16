@@ -9,6 +9,7 @@
     { "id": "minecraft:birch_forest", "required": false },
     { "id": "minecraft:old_growth_birch_forest", "required": false },
     { "id": "minecraft:dark_forest", "required": false },
+    { "id": "minecraft:taiga", "required": false },
 
     { "id": "biomesoplenty:aspen_glade", "required": false },
     { "id": "biomesoplenty:clover_patch", "required": false },
@@ -23,6 +24,8 @@
     { "id": "biomesoplenty:prairie", "required": false },
     { "id": "biomesoplenty:pumpkin_patch", "required": false },
     { "id": "biomesoplenty:seasonal_forest", "required": false },
-    { "id": "biomesoplenty:woodland", "required": false }
+    { "id": "biomesoplenty:woodland", "required": false },
+    { "id": "biomesoplenty:redwood_forest", "required": false },
+    { "id": "biomesoplenty:dead_forest", "required": false }
   ]
 }
