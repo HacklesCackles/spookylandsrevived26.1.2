@@ -10,7 +10,7 @@ public class Config {
 
     public static final ModConfigSpec.IntValue GALLOWS_WEIGHT = BUILDER
             .comment("Spawn weight of the gallows in villages. 0 disables it. Vanilla houses are about 2-4.")
-            .defineInRange("gallowsWeight", 2, 0, 50);
+            .defineInRange("gallowsWeight", 3, 0, 50);
 
     public static class StructureTuning {
         public final ModConfigSpec.DoubleValue chance;
