@@ -6,7 +6,7 @@ version="${mod_version}"
 displayName="${mod_name}"
 authors="HacklesCackles"
 description='''
-A spooky supplement to your Minecraft experience! Adds an abandoned house, a tower dungeon and a spider den to the world.
+A spooky supplement to your Minecraft experience! Adds abandoned structures, tower dungeons, creature dens, and more!
 '''
 
 [[dependencies.${mod_id}]]
