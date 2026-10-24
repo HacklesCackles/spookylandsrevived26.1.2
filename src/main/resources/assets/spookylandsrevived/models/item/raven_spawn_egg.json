@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "spookylandsrevived:item/raven_spawn_egg"
+  }
+}

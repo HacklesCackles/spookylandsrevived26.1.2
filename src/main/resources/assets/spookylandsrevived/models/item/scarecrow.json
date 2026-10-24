@@ -1,0 +1,349 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "minecraft:block/hay_block_side",
+    "post": "minecraft:block/stripped_oak_log",
+    "straw": "minecraft:block/hay_block_side",
+    "straw_top": "minecraft:block/hay_block_top",
+    "pumpkin": "minecraft:block/pumpkin_side",
+    "pumpkin_top": "minecraft:block/pumpkin_top",
+    "face": "minecraft:block/carved_pumpkin"
+  },
+  "elements": [
+    {
+      "name": "post",
+      "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        9,
+        6,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#post"
+        },
+        "south": {
+          "texture": "#post"
+        },
+        "east": {
+          "texture": "#post"
+        },
+        "west": {
+          "texture": "#post"
+        },
+        "up": {
+          "texture": "#post"
+        },
+        "down": {
+          "texture": "#post"
+        }
+      }
+    },
+    {
+      "name": "body",
+      "from": [
+        4,
+        6,
+        5
+      ],
+      "to": [
+        12,
+        16,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#straw"
+        },
+        "south": {
+          "texture": "#straw"
+        },
+        "east": {
+          "texture": "#straw"
+        },
+        "west": {
+          "texture": "#straw"
+        },
+        "up": {
+          "texture": "#straw_top"
+        },
+        "down": {
+          "texture": "#straw_top"
+        }
+      }
+    },
+    {
+      "name": "shoulders",
+      "from": [
+        4,
+        16,
+        5
+      ],
+      "to": [
+        12,
+        19,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#straw"
+        },
+        "south": {
+          "texture": "#straw"
+        },
+        "east": {
+          "texture": "#straw"
+        },
+        "west": {
+          "texture": "#straw"
+        },
+        "up": {
+          "texture": "#straw_top"
+        },
+        "down": {
+          "texture": "#straw_top"
+        }
+      }
+    },
+    {
+      "name": "arms",
+      "from": [
+        0,
+        17,
+        7
+      ],
+      "to": [
+        16,
+        19,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#post"
+        },
+        "south": {
+          "texture": "#post"
+        },
+        "east": {
+          "texture": "#post"
+        },
+        "west": {
+          "texture": "#post"
+        },
+        "up": {
+          "texture": "#post"
+        },
+        "down": {
+          "texture": "#post"
+        }
+      }
+    },
+    {
+      "name": "head",
+      "from": [
+        4,
+        19,
+        4
+      ],
+      "to": [
+        12,
+        27,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#face"
+        },
+        "south": {
+          "texture": "#pumpkin"
+        },
+        "east": {
+          "texture": "#pumpkin"
+        },
+        "west": {
+          "texture": "#pumpkin"
+        },
+        "up": {
+          "texture": "#pumpkin_top"
+        },
+        "down": {
+          "texture": "#pumpkin_top"
+        }
+      }
+    },
+    {
+      "name": "hat_brim",
+      "from": [
+        3,
+        27,
+        3
+      ],
+      "to": [
+        13,
+        28,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#straw"
+        },
+        "south": {
+          "texture": "#straw"
+        },
+        "east": {
+          "texture": "#straw"
+        },
+        "west": {
+          "texture": "#straw"
+        },
+        "up": {
+          "texture": "#straw_top"
+        },
+        "down": {
+          "texture": "#straw_top"
+        }
+      }
+    },
+    {
+      "name": "hat_top",
+      "from": [
+        5,
+        28,
+        5
+      ],
+      "to": [
+        11,
+        31,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#straw"
+        },
+        "south": {
+          "texture": "#straw"
+        },
+        "east": {
+          "texture": "#straw"
+        },
+        "west": {
+          "texture": "#straw"
+        },
+        "up": {
+          "texture": "#straw_top"
+        },
+        "down": {
+          "texture": "#straw"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        -4,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "translation": [
+        0,
+        -4,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        1,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    }
+  }
+}

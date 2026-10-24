@@ -20,5 +20,14 @@
   "spookylandsrevived.configuration.spacing": "Spacing",
   "spookylandsrevived.configuration.spacing.tooltip": "Average grid size in chunks. Bigger = rarer. 0 = use the value from the data file.",
   "spookylandsrevived.configuration.separation": "Separation",
-  "spookylandsrevived.configuration.separation.tooltip": "Minimum gap in chunks inside a grid cell. Must be smaller than spacing. 0 = use the value from the data file."
+  "spookylandsrevived.configuration.separation.tooltip": "Minimum gap in chunks inside a grid cell. Must be smaller than spacing. 0 = use the value from the data file.",
+
+  "itemGroup.spookylandsrevived": "Spooky Lands Revived",
+
+  "entity.spookylandsrevived.raven": "Raven",
+  "item.spookylandsrevived.raven_spawn_egg": "Raven Spawn Egg",
+  "block.spookylandsrevived.raven_nest": "Raven Nest",
+  "block.spookylandsrevived.scarecrow": "Scarecrow",
+  "entity.spookylandsrevived.raven.sitting": "Raven is staying put",
+  "entity.spookylandsrevived.raven.following": "Raven is following you"
 }

@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#spookylandsrevived:spawns_ravens",
+  "spawners": [
+    {
+      "type": "spookylandsrevived:raven",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 4
+    }
+  ]
+}
