@@ -1,0 +1,17 @@
+{
+  "entity.raven.caw": {
+    "subtitle": "subtitles.spookylandsrevived.entity.raven.caw",
+    "sounds": [
+      "spookylandsrevived:entity/raven/caw1",
+      "spookylandsrevived:entity/raven/caw2",
+      "spookylandsrevived:entity/raven/caw3"
+    ]
+  },
+  "entity.raven.hurt": {
+    "subtitle": "subtitles.spookylandsrevived.entity.raven.hurt",
+    "sounds": [
+      "spookylandsrevived:entity/raven/hurt1",
+      "spookylandsrevived:entity/raven/hurt2"
+    ]
+  }
+}

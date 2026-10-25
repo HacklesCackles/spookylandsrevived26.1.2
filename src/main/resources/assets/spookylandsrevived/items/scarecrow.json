@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "spookylandsrevived:item/scarecrow",
+    "model": {
+      "type": "geckolib:geckolib"
+    }
+  }
+}

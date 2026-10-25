@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=north,half=lower": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=north,half=upper": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=east,half=lower": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=east,half=upper": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=south,half=lower": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=south,half=upper": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=west,half=lower": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=west,half=upper": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:raw_iron",
+    "minecraft:raw_gold",
+    "minecraft:raw_copper",
+    "minecraft:iron_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:netherite_ingot",
+    "minecraft:diamond",
+    "minecraft:emerald",
+    "minecraft:lapis_lazuli",
+    "minecraft:amethyst_shard",
+    "minecraft:quartz",
+    { "id": "#c:raw_materials", "required": false },
+    { "id": "#c:ingots", "required": false },
+    { "id": "#c:gems", "required": false },
+    { "id": "#c:ores", "required": false }
+  ]
+}

@@ -40,5 +40,51 @@ public class Config {
         }
     }
 
+    // ---- ravens ----
+    // Spawn settings are read when a world loads, so changing them needs a world restart.
+    // The behaviour toggles take effect right away.
+
+    public static final ModConfigSpec.IntValue RAVEN_SPAWN_WEIGHT;
+    public static final ModConfigSpec.IntValue RAVEN_MIN_GROUP;
+    public static final ModConfigSpec.IntValue RAVEN_MAX_GROUP;
+    public static final ModConfigSpec.BooleanValue RAVENS_STEAL_FROM_PLAYERS;
+    public static final ModConfigSpec.BooleanValue RAVENS_RAID_CROPS;
+    public static final ModConfigSpec.BooleanValue RAVENS_RIDE_MOBS;
+    public static final ModConfigSpec.DoubleValue RAVEN_BOLD_CHANCE;
+    public static final ModConfigSpec.BooleanValue RAVENS_SOAR;
+    public static final ModConfigSpec.IntValue RAVEN_SOAR_HEIGHT;
+
+    static {
+        BUILDER.push("ravens");
+        RAVEN_SPAWN_WEIGHT = BUILDER
+                .comment("Spawn weight of ravens in the biomes from the spookylandsrevived:spawns_ravens tag. 0 = ravens never spawn naturally. Bats are 10. Needs a world restart.")
+                .defineInRange("spawnWeight", 9, 0, 100);
+        RAVEN_MIN_GROUP = BUILDER
+                .comment("Smallest flock that spawns together. Needs a world restart.")
+                .defineInRange("minGroupSize", 2, 1, 16);
+        RAVEN_MAX_GROUP = BUILDER
+                .comment("Largest flock that spawns together (raised to minGroupSize if smaller). Needs a world restart.")
+                .defineInRange("maxGroupSize", 4, 1, 16);
+        RAVENS_STEAL_FROM_PLAYERS = BUILDER
+                .comment("Wild ravens swoop at players and snatch valuables from their inventory.")
+                .define("stealFromPlayers", true);
+        RAVENS_RAID_CROPS = BUILDER
+                .comment("Wild ravens pull up ripe crops. (Also needs the mobGriefing game rule on.)")
+                .define("raidCrops", true);
+        RAVENS_RIDE_MOBS = BUILDER
+                .comment("Wild ravens now and then hitch a ride on animals and villagers (spookylandsrevived:raven_rideable entity tag).")
+                .define("rideMobs", true);
+        RAVEN_BOLD_CHANCE = BUILDER
+                .comment("Chance (0.0 to 1.0) that a raven is bold: not scared of scarecrows, and likes to sit on them. Rolled once per raven. 0.01 = 1 in 100.")
+                .defineInRange("boldChance", 0.05, 0.0, 1.0);
+        RAVENS_SOAR = BUILDER
+                .comment("Wild ravens now and then spiral up high, circle on a glide for a while (flockmates often join in), then spiral back down.")
+                .define("soaring", true);
+        RAVEN_SOAR_HEIGHT = BUILDER
+                .comment("How high above the ground soaring ravens circle, in blocks (each raven varies a little).")
+                .defineInRange("soarHeight", 20, 8, 48);
+        BUILDER.pop();
+    }
+
     static final ModConfigSpec SPEC = BUILDER.build();
 }

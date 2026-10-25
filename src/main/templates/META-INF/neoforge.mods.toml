@@ -23,5 +23,20 @@ versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
 
+[[dependencies.${mod_id}]]
+modId="geckolib"
+type="required"
+versionRange="[5.5,)"
+ordering="NONE"
+side="BOTH"
+
+# JEI is optional: recipes and info pages show up when it's installed.
+[[dependencies.${mod_id}]]
+modId="jei"
+type="optional"
+versionRange="[30,)"
+ordering="NONE"
+side="CLIENT"
+
 [[mixins]]
 config="${mod_id}.mixins.json"
