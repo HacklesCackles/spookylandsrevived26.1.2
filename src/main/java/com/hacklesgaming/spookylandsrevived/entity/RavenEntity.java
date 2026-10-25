@@ -10,6 +10,7 @@ import com.geckolib.util.GeckoLibUtil;
 import com.hacklesgaming.spookylandsrevived.Config;
 import com.hacklesgaming.spookylandsrevived.SpookyLandsRevived;
 import com.hacklesgaming.spookylandsrevived.block.entity.ScarecrowBlockEntity;
+import com.hacklesgaming.spookylandsrevived.registry.ModSounds;
 import com.hacklesgaming.spookylandsrevived.entity.ai.GallowsLocator;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenAvoidScarecrowGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenFollowOwnerGoal;
@@ -53,6 +54,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -677,6 +679,28 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
     /** How long it's been holding the current item (server side). */
     public int getCarriedTicks() {
         return carriedTicks;
+    }
+
+    // ---- sounds ----
+
+    /** Random caw every once in a while (see getAmbientSoundInterval). */
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.RAVEN_CAW.get();
+    }
+
+    /**
+     * Minimum ticks between random caws. Vanilla default is 80 (4 s); 400 means a raven
+     * caws roughly every 20-40 seconds, so a flock isn't constantly noisy.
+     */
+    @Override
+    public int getAmbientSoundInterval() {
+        return 500;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return ModSounds.RAVEN_HURT.get();
     }
 
     @Override

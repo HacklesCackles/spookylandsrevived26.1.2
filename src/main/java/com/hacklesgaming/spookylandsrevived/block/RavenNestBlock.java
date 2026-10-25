@@ -32,7 +32,7 @@ import org.jspecify.annotations.Nullable;
  */
 public class RavenNestBlock extends BaseEntityBlock {
     public static final MapCodec<RavenNestBlock> CODEC = simpleCodec(RavenNestBlock::new);
-    private static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0);
+    private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 5.0, 16.0);
 
     public RavenNestBlock(Properties properties) {
         super(properties);

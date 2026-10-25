@@ -8,6 +8,7 @@ import com.hacklesgaming.spookylandsrevived.registry.ModBlocks;
 import com.hacklesgaming.spookylandsrevived.registry.ModCreativeTabs;
 import com.hacklesgaming.spookylandsrevived.registry.ModEntities;
 import com.hacklesgaming.spookylandsrevived.registry.ModItems;
+import com.hacklesgaming.spookylandsrevived.registry.ModSounds;
 import com.mojang.logging.LogUtils;
 
 import net.neoforged.bus.api.IEventBus;
@@ -31,6 +32,7 @@ public class SpookyLandsRevived {
         ModBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        ModSounds.SOUND_EVENTS.register(modEventBus);
         ModCreativeTabs.CREATIVE_TABS.register(modEventBus);
         ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
     }

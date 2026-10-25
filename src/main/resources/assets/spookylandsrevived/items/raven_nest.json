@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "spookylandsrevived:block/raven_nest"
+    "model": "spookylandsrevived:item/raven_nest"
   }
 }

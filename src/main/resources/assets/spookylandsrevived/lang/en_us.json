@@ -54,6 +54,7 @@
 
   "jei.spookylandsrevived.scarecrow": "Place a scarecrow to protect your stuff. Ravens won't steal from players, pick up items, raid crops or build nests within 16 blocks of it, and any that come within 8 blocks get spooked and fly off. (Watch out for the odd bold raven: they aren't scared at all.)",
   "jei.spookylandsrevived.raven_nest": "Ravens build these on treetops and stash the loot they steal inside. Right-click a nest to take out one item at a time, or break it to spill everything. The item on top of the pile shows in the nest.",
-  "jei.spookylandsrevived.raven": "Ravens steal valuables and ripe crops. Hit one to make it drop what it's carrying. Give a raven valuables to tame it (1 in 3 chance each). Tamed ravens never steal, follow you around, ride on your shoulder and bring you the odd gift. Right-click a tamed raven to make it stay or follow."
+  "jei.spookylandsrevived.raven": "Ravens steal valuables and ripe crops. Hit one to make it drop what it's carrying. Give a raven valuables to tame it (1 in 3 chance each). Tamed ravens never steal, follow you around, ride on your shoulder and bring you the odd gift. Right-click a tamed raven to make it stay or follow.",
+  "subtitles.spookylandsrevived.entity.raven.caw": "Raven caws",
+  "subtitles.spookylandsrevived.entity.raven.hurt": "Raven hurts"
 }
-

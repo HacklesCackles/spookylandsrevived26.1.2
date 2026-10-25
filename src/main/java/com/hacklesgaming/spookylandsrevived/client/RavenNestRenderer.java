@@ -24,7 +24,7 @@ import org.jspecify.annotations.Nullable;
  */
 public class RavenNestRenderer implements BlockEntityRenderer<RavenNestBlockEntity, RavenNestRenderer.State> {
     /** Height of the item above the bottom of the block, in blocks. Tweak to suit the nest model. */
-    private static final float ITEM_HEIGHT = 3.5F / 16.0F;
+    private static final float ITEM_HEIGHT = 2.1F / 16.0F; // just above the 2px nest floor
     /** Size of the item. 0.375 is the size campfires use for food. */
     private static final float ITEM_SCALE = 0.375F;
 
