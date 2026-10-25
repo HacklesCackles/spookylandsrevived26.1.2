@@ -41,10 +41,15 @@ public class ScarecrowBlock extends BaseEntityBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
+    // Matches the scarecrow model: post up the middle, body from 14 to 24 px, head from 25 to 32 px.
+    // The arms stick out past the block so they aren't part of the hitbox.
     private static final VoxelShape LOWER_SHAPE = Shapes.or(
-            Block.box(7.0, 0.0, 7.0, 9.0, 6.0, 9.0),     // post
-            Block.box(4.0, 6.0, 4.0, 12.0, 16.0, 12.0)); // body
-    private static final VoxelShape UPPER_SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 12.0, 12.0); // shoulders + head
+            Block.box(7.0, 0.0, 7.0, 9.0, 14.0, 9.0),     // post
+            Block.box(4.0, 14.0, 4.0, 12.0, 16.0, 12.0)); // bottom of body
+    private static final VoxelShape UPPER_SHAPE = Shapes.or(
+            Block.box(4.0, 0.0, 4.0, 12.0, 8.0, 12.0),    // rest of body
+            Block.box(7.0, 8.0, 7.0, 9.0, 9.0, 9.0),      // neck (post)
+            Block.box(3.0, 9.0, 3.0, 13.0, 16.0, 13.0));  // head
 
     public ScarecrowBlock(Properties properties) {
         super(properties);

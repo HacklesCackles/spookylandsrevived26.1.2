@@ -1,6 +1,7 @@
 package com.hacklesgaming.spookylandsrevived.registry;
 
 import com.hacklesgaming.spookylandsrevived.SpookyLandsRevived;
+import com.hacklesgaming.spookylandsrevived.item.ScarecrowItem;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -15,5 +16,7 @@ public class ModItems {
             props -> new SpawnEggItem(props.spawnEgg(ModEntities.RAVEN.get())));
 
     public static final DeferredItem<BlockItem> RAVEN_NEST = ITEMS.registerSimpleBlockItem(ModBlocks.RAVEN_NEST);
-    public static final DeferredItem<BlockItem> SCARECROW = ITEMS.registerSimpleBlockItem(ModBlocks.SCARECROW);
+    /** Uses the animated GeckoLib scarecrow model as its item look (see ScarecrowItem). */
+    public static final DeferredItem<ScarecrowItem> SCARECROW = ITEMS.registerItem("scarecrow",
+            props -> new ScarecrowItem(ModBlocks.SCARECROW.get(), props.useBlockDescriptionPrefix()));
 }

@@ -11,6 +11,7 @@
     "minecraft:mule",
     "minecraft:llama",
     "minecraft:villager",
-    "minecraft:wandering_trader"
+    "minecraft:wandering_trader",
+    "minecraft:iron_golem"
   ]
 }

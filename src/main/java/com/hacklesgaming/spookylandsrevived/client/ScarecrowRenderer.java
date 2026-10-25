@@ -19,11 +19,12 @@ public class ScarecrowRenderer extends GeoBlockRenderer<ScarecrowBlockEntity, Bl
     }
 
     /**
-     * The model is two blocks tall (plus arms sticking out), but lives in the bottom block.
+     * The model is two blocks tall (plus arms reaching ~1.4 blocks out), but lives in the bottom block.
      * Without this the top half would vanish whenever the bottom block is off screen.
      */
     @Override
     public AABB getRenderBoundingBox(ScarecrowBlockEntity blockEntity) {
-        return new AABB(blockEntity.getBlockPos()).inflate(0.5, 0.0, 0.5).expandTowards(0.0, 1.5, 0.0);
+        // Arms reach about 1.4 blocks out each side; head tops out just over 2 blocks.
+        return new AABB(blockEntity.getBlockPos()).inflate(1.0, 0.0, 1.0).expandTowards(0.0, 1.75, 0.0);
     }
 }
