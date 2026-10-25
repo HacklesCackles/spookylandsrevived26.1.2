@@ -4,7 +4,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "spookylandsrevived:block/raven_nest",
-		"particle": "spookylandsrevived:block/raven_nest"
+		"particle": "spookylandsrevived:block/raven_nest_particle"
 	},
 	"elements": [
 		{
