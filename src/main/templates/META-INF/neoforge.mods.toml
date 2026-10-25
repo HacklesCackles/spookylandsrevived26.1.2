@@ -30,5 +30,13 @@ versionRange="[5.5,)"
 ordering="NONE"
 side="BOTH"
 
+# JEI is optional: recipes and info pages show up when it's installed.
+[[dependencies.${mod_id}]]
+modId="jei"
+type="optional"
+versionRange="[29,)"
+ordering="NONE"
+side="CLIENT"
+
 [[mixins]]
 config="${mod_id}.mixins.json"

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import com.hacklesgaming.spookylandsrevived.Config;
 import com.hacklesgaming.spookylandsrevived.entity.RavenEntity;
 
 import net.minecraft.sounds.SoundEvents;
@@ -46,8 +47,8 @@ public class RavenStealFromPlayerGoal extends Goal {
             cooldown--;
             return false;
         }
-        if (raven.isTame()) {
-            return false; // tamed ravens don't steal from anyone
+        if (raven.isTame() || !Config.RAVENS_STEAL_FROM_PLAYERS.get()) {
+            return false; // tamed ravens don't steal from anyone; config can switch theft off
         }
         if (raven.hasCarriedItem() || raven.isInWater() || raven.isBathing()
                 || raven.getRandom().nextInt(reducedTickDelay(CHANCE_INTERVAL)) != 0) {

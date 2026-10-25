@@ -1,34 +1,28 @@
 {
   "variants": {
     "facing=north,half=lower": {
-      "model": "spookylandsrevived:block/scarecrow_lower"
-    },
-    "facing=east,half=lower": {
-      "model": "spookylandsrevived:block/scarecrow_lower",
-      "y": 90
-    },
-    "facing=south,half=lower": {
-      "model": "spookylandsrevived:block/scarecrow_lower",
-      "y": 180
-    },
-    "facing=west,half=lower": {
-      "model": "spookylandsrevived:block/scarecrow_lower",
-      "y": 270
+      "model": "spookylandsrevived:block/scarecrow_particle"
     },
     "facing=north,half=upper": {
-      "model": "spookylandsrevived:block/scarecrow_upper"
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=east,half=lower": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
     },
     "facing=east,half=upper": {
-      "model": "spookylandsrevived:block/scarecrow_upper",
-      "y": 90
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=south,half=lower": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
     },
     "facing=south,half=upper": {
-      "model": "spookylandsrevived:block/scarecrow_upper",
-      "y": 180
+      "model": "spookylandsrevived:block/scarecrow_particle"
+    },
+    "facing=west,half=lower": {
+      "model": "spookylandsrevived:block/scarecrow_particle"
     },
     "facing=west,half=upper": {
-      "model": "spookylandsrevived:block/scarecrow_upper",
-      "y": 270
+      "model": "spookylandsrevived:block/scarecrow_particle"
     }
   }
 }

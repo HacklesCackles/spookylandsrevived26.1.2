@@ -3,16 +3,26 @@ package com.hacklesgaming.spookylandsrevived.block.entity;
 import com.hacklesgaming.spookylandsrevived.registry.ModBlockEntities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
-/** Stores the loot ravens bring back. 9 slots, filled in order. */
+/**
+ * Stores the loot ravens bring back. 9 slots, filled in order.
+ * The contents are synced to clients so the top item can be drawn lying in the nest.
+ */
 public class RavenNestBlockEntity extends BlockEntity {
     public static final int SIZE = 9;
 
@@ -43,7 +53,7 @@ public class RavenNestBlockEntity extends BlockEntity {
             }
         }
         if (remaining.getCount() != stack.getCount()) {
-            setChanged();
+            changed();
         }
         return remaining;
     }
@@ -67,11 +77,41 @@ public class RavenNestBlockEntity extends BlockEntity {
             if (!items.get(i).isEmpty()) {
                 ItemStack taken = items.get(i);
                 items.set(i, ItemStack.EMPTY);
-                setChanged();
+                changed();
                 return taken;
             }
         }
         return ItemStack.EMPTY;
+    }
+
+    /** The stack takeLast() would hand out next: shown lying in the nest by RavenNestRenderer. */
+    public ItemStack getTopItem() {
+        for (int i = SIZE - 1; i >= 0; i--) {
+            if (!items.get(i).isEmpty()) {
+                return items.get(i);
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
+    /** Save, and send the new contents to nearby players so the displayed item updates. */
+    private void changed() {
+        setChanged();
+        if (level != null && !level.isClientSide()) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        }
+    }
+
+    // ---- client sync (for the item shown in the nest) ----
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     public boolean isEmpty() {

@@ -21,6 +21,16 @@ repositories {
         includeGroup("com.geckolib")
     }
   }
+
+    maven {
+        // JEI
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup("mezz.jei")
+            includeGroup("net.mezzdev.config") // JEI's config library
+        }
+    }
 }
 
 sourceSets.main.resources {
@@ -125,4 +135,10 @@ idea {
 }
 dependencies {
     implementation "com.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+
+    // JEI: compile against the API only, so JEI stays optional for players.
+    // The full mod is only added to the dev run (localRuntime), not as a dependency.
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }

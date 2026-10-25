@@ -29,5 +29,31 @@
   "block.spookylandsrevived.raven_nest": "Raven Nest",
   "block.spookylandsrevived.scarecrow": "Scarecrow",
   "entity.spookylandsrevived.raven.sitting": "Raven is staying put",
-  "entity.spookylandsrevived.raven.following": "Raven is following you"
+  "entity.spookylandsrevived.raven.following": "Raven is following you",
+
+  "spookylandsrevived.configuration.ravens": "Ravens",
+  "spookylandsrevived.configuration.ravens.title": "Ravens",
+  "spookylandsrevived.configuration.spawnWeight": "Spawn Weight",
+  "spookylandsrevived.configuration.spawnWeight.tooltip": "Spawn weight of ravens in their biomes. 0 = ravens never spawn naturally. Bats are 10. Needs a world restart.",
+  "spookylandsrevived.configuration.minGroupSize": "Min Flock Size",
+  "spookylandsrevived.configuration.minGroupSize.tooltip": "Smallest flock that spawns together. Needs a world restart.",
+  "spookylandsrevived.configuration.maxGroupSize": "Max Flock Size",
+  "spookylandsrevived.configuration.maxGroupSize.tooltip": "Largest flock that spawns together. Needs a world restart.",
+  "spookylandsrevived.configuration.stealFromPlayers": "Steal From Players",
+  "spookylandsrevived.configuration.stealFromPlayers.tooltip": "Wild ravens swoop at players and snatch valuables from their inventory.",
+  "spookylandsrevived.configuration.raidCrops": "Raid Crops",
+  "spookylandsrevived.configuration.raidCrops.tooltip": "Wild ravens pull up ripe crops (also needs the mobGriefing game rule).",
+  "spookylandsrevived.configuration.rideMobs": "Ride Animals",
+  "spookylandsrevived.configuration.rideMobs.tooltip": "Wild ravens now and then hitch a ride on animals and villagers.",
+  "spookylandsrevived.configuration.boldChance": "Bold Raven Chance",
+  "spookylandsrevived.configuration.boldChance.tooltip": "Chance a raven isn't scared of scarecrows and likes to sit on them. 0.01 = 1 in 100.",
+  "spookylandsrevived.configuration.soaring": "Soaring",
+  "spookylandsrevived.configuration.soaring.tooltip": "Wild ravens now and then spiral up high, circle on a glide for a while, then spiral back down.",
+  "spookylandsrevived.configuration.soarHeight": "Soar Height",
+  "spookylandsrevived.configuration.soarHeight.tooltip": "How high above the ground soaring ravens circle, in blocks.",
+
+  "jei.spookylandsrevived.scarecrow": "Place a scarecrow to protect your stuff. Ravens won't steal from players, pick up items, raid crops or build nests within 16 blocks of it, and any that come within 8 blocks get spooked and fly off. (Watch out for the odd bold raven: they aren't scared at all.)",
+  "jei.spookylandsrevived.raven_nest": "Ravens build these on treetops and stash the loot they steal inside. Right-click a nest to take out one item at a time, or break it to spill everything. The item on top of the pile shows in the nest.",
+  "jei.spookylandsrevived.raven": "Ravens steal valuables and ripe crops. Hit one to make it drop what it's carrying. Give a raven valuables to tame it (1 in 3 chance each). Tamed ravens never steal, follow you around, ride on your shoulder and bring you the odd gift. Right-click a tamed raven to make it stay or follow."
 }
+

@@ -19,6 +19,7 @@ public class RavenAvoidScarecrowGoal extends Goal {
 
     private final RavenEntity raven;
     private @Nullable Vec3 escape;
+    private @Nullable BlockPos scarecrowPos;
     private int ticks;
     private int checkCooldown;
 
@@ -34,13 +35,14 @@ public class RavenAvoidScarecrowGoal extends Goal {
             return false;
         }
         checkCooldown = reducedTickDelay(CHECK_INTERVAL);
-        if (raven.isBathing()) {
-            return false;
+        if (raven.isBathing() || raven.isBold()) {
+            return false; // bold ravens aren't scared of scarecrows
         }
         BlockPos scarecrow = ScarecrowBlockEntity.findNearest(raven.level(), raven.blockPosition(), RavenEntity.SCARE_RADIUS);
         if (scarecrow == null) {
             return false;
         }
+        scarecrowPos = scarecrow;
         Vec3 away = raven.position().subtract(Vec3.atCenterOf(scarecrow)).multiply(1.0, 0.0, 1.0);
         if (away.lengthSqr() < 1.0E-4) {
             away = new Vec3(raven.getRandom().nextDouble() - 0.5, 0.0, raven.getRandom().nextDouble() - 0.5);
@@ -53,6 +55,10 @@ public class RavenAvoidScarecrowGoal extends Goal {
     public void start() {
         ticks = 0;
         raven.getNavigation().moveTo(escape.x, escape.y, escape.z, 1.4);
+        // The scarecrow plays its "spook" animation (if its model has one).
+        if (scarecrowPos != null && raven.level().getBlockEntity(scarecrowPos) instanceof ScarecrowBlockEntity scarecrow) {
+            scarecrow.playSpook();
+        }
     }
 
     @Override
@@ -68,5 +74,6 @@ public class RavenAvoidScarecrowGoal extends Goal {
     @Override
     public void stop() {
         escape = null;
+        scarecrowPos = null;
     }
 }

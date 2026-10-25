@@ -2,7 +2,9 @@ package com.hacklesgaming.spookylandsrevived.entity.ai;
 
 import java.util.EnumSet;
 
+import com.hacklesgaming.spookylandsrevived.block.entity.ScarecrowBlockEntity;
 import com.hacklesgaming.spookylandsrevived.entity.RavenEntity;
+import com.hacklesgaming.spookylandsrevived.registry.ModBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +23,7 @@ import org.jspecify.annotations.Nullable;
  * - If a village gallows is nearby it usually heads there and sits on the top beam.
  * - Otherwise it picks a nearby block from the raven_perches tag (fences, walls, leaves,
  *   logs...), higher ones first.
+ * - Bold ravens (see RavenEntity#isBold) often go and sit on a scarecrow's head instead.
  */
 public class RavenPerchGoal extends Goal {
     private static final int SEARCH_RADIUS = 10;
@@ -33,6 +36,9 @@ public class RavenPerchGoal extends Goal {
     private static final int CHANCE_INTERVAL = 100;
     /** Chance a perch trip goes to the gallows when one is in range. */
     private static final float GALLOWS_CHANCE = 0.6F;
+    /** Chance a bold raven's perch trip goes to a nearby scarecrow. */
+    private static final float SCARECROW_CHANCE = 0.5F;
+    private static final double SCARECROW_RANGE = 24.0;
     /** Pathfinding only reaches ~16 blocks, so longer trips go in hops of this length. */
     private static final double HOP_LENGTH = 12.0;
 
@@ -40,6 +46,8 @@ public class RavenPerchGoal extends Goal {
 
     private @Nullable BlockPos perch;
     private boolean gallowsTrip;
+    /** Bold ravens only: sitting on top of a scarecrow. */
+    private boolean scarecrowTrip;
     private Vec3 seat = Vec3.ZERO;
     private boolean sitting;
     private int travelTicks;
@@ -63,8 +71,17 @@ public class RavenPerchGoal extends Goal {
         }
 
         gallowsTrip = false;
+        scarecrowTrip = false;
         perch = null;
-        if (raven.getRandom().nextFloat() < GALLOWS_CHANCE && raven.level() instanceof ServerLevel level) {
+        // Bold ravens like sitting on scarecrows: head for one now and then.
+        if (raven.isBold() && raven.getRandom().nextFloat() < SCARECROW_CHANCE) {
+            BlockPos scarecrow = ScarecrowBlockEntity.findNearest(raven.level(), raven.blockPosition(), SCARECROW_RANGE);
+            if (scarecrow != null && raven.level().getBlockState(scarecrow.above()).is(ModBlocks.SCARECROW.get())) {
+                perch = scarecrow.above(); // the top half (head and shoulders)
+                scarecrowTrip = true;
+            }
+        }
+        if (perch == null && raven.getRandom().nextFloat() < GALLOWS_CHANCE && raven.level() instanceof ServerLevel level) {
             BoundingBox gallows = raven.getNearbyGallows();
             if (gallows != null) {
                 perch = GallowsLocator.findPerchSpot(level, gallows, raven.getRandom());
@@ -136,7 +153,7 @@ public class RavenPerchGoal extends Goal {
             // Landed on it.
             sitting = true;
             // Gallows visits last a bit longer: 30-60 seconds. Normal perches 15-45.
-            sitTicks = gallowsTrip ? 600 + raven.getRandom().nextInt(600) : 300 + raven.getRandom().nextInt(600);
+            sitTicks = gallowsTrip || scarecrowTrip ? 600 + raven.getRandom().nextInt(600) : 300 + raven.getRandom().nextInt(600);
             raven.setPerchOverride(true);
             raven.getNavigation().stop();
             return;
@@ -165,6 +182,7 @@ public class RavenPerchGoal extends Goal {
         perch = null;
         sitting = false;
         gallowsTrip = false;
+        scarecrowTrip = false;
         cooldown = reducedTickDelay(200 + raven.getRandom().nextInt(400));
     }
 
@@ -184,12 +202,16 @@ public class RavenPerchGoal extends Goal {
 
     private boolean isStillPerch() {
         BlockState state = raven.level().getBlockState(perch);
+        if (scarecrowTrip) {
+            return state.is(ModBlocks.SCARECROW.get());
+        }
         // Gallows can be any wood type depending on the village style, so only require "still solid".
         return gallowsTrip ? !state.getCollisionShape(raven.level(), perch).isEmpty() : state.is(RavenEntity.PERCHES);
     }
 
     private boolean isStandingOnPerch() {
-        return raven.onGround() && (raven.getOnPos().equals(perch) || (!gallowsTrip && raven.isOnPerch()));
+        boolean specificSpot = gallowsTrip || scarecrowTrip;
+        return raven.onGround() && (raven.getOnPos().equals(perch) || (!specificSpot && raven.isOnPerch()));
     }
 
     /** Random-sample the area and keep the highest valid perch. */

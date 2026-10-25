@@ -7,6 +7,7 @@ import com.geckolib.animation.AnimationController;
 import com.geckolib.animation.RawAnimation;
 import com.geckolib.animation.object.PlayState;
 import com.geckolib.util.GeckoLibUtil;
+import com.hacklesgaming.spookylandsrevived.Config;
 import com.hacklesgaming.spookylandsrevived.SpookyLandsRevived;
 import com.hacklesgaming.spookylandsrevived.block.entity.ScarecrowBlockEntity;
 import com.hacklesgaming.spookylandsrevived.entity.ai.GallowsLocator;
@@ -14,12 +15,15 @@ import com.hacklesgaming.spookylandsrevived.entity.ai.RavenAvoidScarecrowGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenFollowOwnerGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenGiftGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenShoulderGoal;
+import com.hacklesgaming.spookylandsrevived.entity.ai.RavenSoarGoal;
+import com.hacklesgaming.spookylandsrevived.entity.ai.TowerLocator;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenSitGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenBatheGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenFlockGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenPerchGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenPickUpValuableGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenRaidCropGoal;
+import com.hacklesgaming.spookylandsrevived.entity.ai.RavenRideMobGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenStashGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenStealFromPlayerGoal;
 import com.hacklesgaming.spookylandsrevived.entity.ai.RavenWanderGoal;
@@ -91,6 +95,10 @@ import org.jspecify.annotations.Nullable;
  * Taming: give it valuables (1 in 3). Tamed: right-click toggles sit/follow, never steals
  * or raids crops, and brings its owner valuables it finds lying around plus the odd gift.
  * Shoulder: lands on its owner's shoulder when they stand still; hops off on sneak, hits, water, falls.
+ * Riding: wild ravens now and then sit on the back of an animal or a villager's head for a while.
+ * Bold: about 1 in 100 ravens (config) isn't scared of scarecrows and likes to sit on them.
+ * Soaring: now and then spirals up high, circles on a glide with its flock, then spirals down.
+ * Near a tower dungeon it soars much more often, circling above the tower.
  */
 public class RavenEntity extends PathfinderMob implements GeoEntity {
 
@@ -224,6 +232,9 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         this.goalSelector.addGoal(2, new RavenRaidCropGoal(this));
         this.goalSelector.addGoal(2, new RavenBatheGoal(this));
         this.goalSelector.addGoal(2, new RavenPerchGoal(this));
+        this.goalSelector.addGoal(2, new RavenRideMobGoal(this));
+        // Same priority as perching etc., so those can't cut a soaring flight short.
+        this.goalSelector.addGoal(2, new RavenSoarGoal(this));
         this.goalSelector.addGoal(3, new RavenFlockGoal(this));
         this.wanderGoal = new RavenWanderGoal(this, 1.0);
         this.goalSelector.addGoal(4, this.wanderGoal);
@@ -246,6 +257,12 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         }
 
         if (this.level() instanceof ServerLevel) {
+            rollBoldOnce();
+            // Riding something the ride goal didn't put it on (e.g. reloaded from a save while
+            // sitting on a cow): hop off rather than staying there forever.
+            if (this.isPassenger() && !ridingByGoal) {
+                this.stopRiding();
+            }
             // Hovering over lava/fire with nothing to do: flap upward until the wander goal moves it away.
             if (!this.onGround() && this.getNavigation().isDone() && isHazardBelow(this.blockPosition())) {
                 Vec3 m = this.getDeltaMovement();
@@ -254,9 +271,15 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
             if (gallowsCheckCooldown > 0) {
                 gallowsCheckCooldown--;
             }
+            if (towerCheckCooldown > 0) {
+                towerCheckCooldown--;
+            }
             carriedTicks = hasCarriedItem() ? carriedTicks + 1 : 0;
             if (shoulderCooldown > 0) {
                 shoulderCooldown--;
+            }
+            if (soarInviteTicks > 0 && --soarInviteTicks == 0) {
+                soarInvite = null;
             }
             tickFlockTakeoff();
             updateMovementState();
@@ -265,7 +288,7 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
 
     /** Server-side state machine that drives the animation state. */
     private void updateMovementState() {
-        if (isOnShoulder()) {
+        if (isOnShoulder() || this.isPassenger()) {
             setMovementState(STATE_PERCHED);
             wasAirborne = false;
             airTicks = 0;
@@ -330,7 +353,8 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         }
 
         if (airborne) {
-            setMovementState(descendTicks >= TICKS_TO_START_GLIDE ? STATE_GLIDING : STATE_FLYING);
+            // Circling high up (soar goal) holds its wings out even while flying level.
+            setMovementState(soarGliding || descendTicks >= TICKS_TO_START_GLIDE ? STATE_GLIDING : STATE_FLYING);
         } else {
             // Sitting on command uses the calm perched pose too.
             setMovementState(isOnPerch() || isOrderedToSit() ? STATE_PERCHED : STATE_GROUND);
@@ -552,8 +576,88 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         return ScarecrowBlockEntity.isNear(this.level(), pos, PROTECT_RADIUS);
     }
 
+    /** Bold ravens aren't spooked by scarecrows (but still won't steal near one). */
     public boolean isNearScarecrow(BlockPos pos) {
-        return ScarecrowBlockEntity.isNear(this.level(), pos, SCARE_RADIUS);
+        return !isBold() && ScarecrowBlockEntity.isNear(this.level(), pos, SCARE_RADIUS);
+    }
+
+    // ---- bold ravens ----
+
+    /** Rare fearless raven: ignores scarecrows' scare radius and likes to sit on them. */
+    private boolean bold;
+    /** Whether the bold chance has been rolled yet (rolled once, on the first server tick). */
+    private boolean boldRolled;
+
+    public boolean isBold() {
+        return bold;
+    }
+
+    private void rollBoldOnce() {
+        if (!boldRolled) {
+            boldRolled = true;
+            bold = this.getRandom().nextDouble() < Config.RAVEN_BOLD_CHANCE.get();
+        }
+    }
+
+    // ---- riding other mobs ----
+
+    /** Mobs a wild raven may hitch a ride on. Edit data/spookylandsrevived/tags/entity_type/raven_rideable.json. */
+    public static final TagKey<EntityType<?>> RIDEABLE = TagKey.create(Registries.ENTITY_TYPE,
+            Identifier.fromNamespaceAndPath(SpookyLandsRevived.MOD_ID, "raven_rideable"));
+
+    // ---- soaring ----
+
+    /** Tower dungeons within this many chunks draw ravens to soar around them (4 = about 64 blocks). */
+    private static final int TOWER_CHUNK_RADIUS = 4;
+    /** Re-check for a tower this often; it reads structure data from several chunks. */
+    private static final int TOWER_CHECK_INTERVAL = 300;
+
+    private @Nullable BoundingBox nearbyTower;
+    private int towerCheckCooldown;
+
+    /** Bounding box of the nearest tower dungeon within about 64 blocks (server only, cached). */
+    public @Nullable BoundingBox getNearbyTower() {
+        if (!(this.level() instanceof ServerLevel level)) {
+            return null;
+        }
+        if (towerCheckCooldown <= 0) {
+            towerCheckCooldown = TOWER_CHECK_INTERVAL + this.getRandom().nextInt(60);
+            nearbyTower = TowerLocator.findNearest(level, this.blockPosition(), TOWER_CHUNK_RADIUS);
+        }
+        return nearbyTower;
+    }
+
+    /** Set by RavenSoarGoal while circling or spiralling down: forces the glide pose. */
+    private boolean soarGliding;
+    /** A flockmate started soaring and invited this raven along: circle centre and height. */
+    private @Nullable Vec3 soarInvite;
+    private int soarInviteTicks;
+
+    public void setSoarGliding(boolean soarGliding) {
+        this.soarGliding = soarGliding;
+    }
+
+    /** Ask this raven to join a soaring flight around centre (x, z) at height y. Lasts a few seconds. */
+    public void inviteToSoar(Vec3 centre) {
+        if (!isTame() && !isBathing() && !isPassenger() && !hasCarriedItem()) {
+            soarInvite = centre;
+            soarInviteTicks = 60;
+        }
+    }
+
+    /** The pending soar invite (once), or null. */
+    public @Nullable Vec3 consumeSoarInvite() {
+        Vec3 invite = soarInviteTicks > 0 ? soarInvite : null;
+        soarInvite = null;
+        soarInviteTicks = 0;
+        return invite;
+    }
+
+    /** Set by RavenRideMobGoal while it's deliberately riding something. */
+    private boolean ridingByGoal;
+
+    public void setRidingByGoal(boolean ridingByGoal) {
+        this.ridingByGoal = ridingByGoal;
     }
 
     // ---- nest ----
@@ -581,6 +685,9 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         if (hurt && this.isAlive()) {
             if (isOnShoulder()) {
                 hopOffShoulder(SHOULDER_COOLDOWN_TICKS);
+            }
+            if (this.isPassenger()) {
+                this.stopRiding(); // startled off whatever it was riding
             }
             dropCarriedItem(level); // startled: lets go of the loot
         }
@@ -856,6 +963,8 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         output.storeNullable("HomeNest", BlockPos.CODEC, homeNest);
         output.storeNullable("Owner", UUIDUtil.CODEC, ownerUUID);
         output.putBoolean("Sitting", orderedToSit);
+        output.putBoolean("Bold", bold);
+        output.putBoolean("BoldRolled", boldRolled);
     }
 
     @Override
@@ -866,6 +975,8 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         ownerUUID = input.read("Owner", UUIDUtil.CODEC).orElse(null);
         this.entityData.set(DATA_TAME, ownerUUID != null);
         orderedToSit = input.getBooleanOr("Sitting", false);
+        bold = input.getBooleanOr("Bold", false);
+        boldRolled = input.getBooleanOr("BoldRolled", false);
     }
 
     // ---- GeckoLib ----

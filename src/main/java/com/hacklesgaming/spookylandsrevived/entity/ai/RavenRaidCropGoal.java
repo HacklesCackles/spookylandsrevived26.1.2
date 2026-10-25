@@ -3,6 +3,7 @@ package com.hacklesgaming.spookylandsrevived.entity.ai;
 import java.util.EnumSet;
 import java.util.List;
 
+import com.hacklesgaming.spookylandsrevived.Config;
 import com.hacklesgaming.spookylandsrevived.entity.RavenEntity;
 
 import net.minecraft.core.BlockPos;
@@ -51,8 +52,8 @@ public class RavenRaidCropGoal extends Goal {
         if (!(raven.level() instanceof ServerLevel level) || !EventHooks.canEntityGrief(level, raven)) {
             return false;
         }
-        if (raven.isTame()) {
-            return false; // tamed ravens leave crops alone
+        if (raven.isTame() || !Config.RAVENS_RAID_CROPS.get()) {
+            return false; // tamed ravens leave crops alone; config can switch raids off
         }
         if (raven.hasCarriedItem() || raven.isInWater() || raven.isBathing() || raven.wantsFlockTakeoff()
                 || raven.getRandom().nextInt(reducedTickDelay(CHANCE_INTERVAL)) != 0) {

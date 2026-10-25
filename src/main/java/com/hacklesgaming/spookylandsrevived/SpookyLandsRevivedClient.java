@@ -2,8 +2,14 @@ package com.hacklesgaming.spookylandsrevived;
 
 import com.geckolib.renderer.GeoEntityRenderer;
 import com.hacklesgaming.spookylandsrevived.client.RavenCarriedItemLayer;
+import com.hacklesgaming.spookylandsrevived.client.RavenNestRenderer;
+import com.hacklesgaming.spookylandsrevived.client.ScarecrowRenderer;
 import com.hacklesgaming.spookylandsrevived.entity.RavenEntity;
+import com.hacklesgaming.spookylandsrevived.registry.ModBlockEntities;
 import com.hacklesgaming.spookylandsrevived.registry.ModEntities;
+
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -37,6 +43,17 @@ public class SpookyLandsRevivedClient {
         // geckolib/animations/entity/raven.animation.json and textures/entity/raven.png
         // plus a layer that draws the carried item in its beak.
         event.registerEntityRenderer(ModEntities.RAVEN.get(), SpookyLandsRevivedClient::createRavenRenderer);
+
+        // Nest: draws the top stored item lying in the nest.
+        event.registerBlockEntityRenderer(ModBlockEntities.RAVEN_NEST.get(), RavenNestRenderer::new);
+        // Scarecrow: the animated GeckoLib model (the block itself is invisible).
+        registerScarecrowRenderer(event);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void registerScarecrowRenderer(EntityRenderersEvent.RegisterRenderers event) {
+        BlockEntityRendererProvider provider = ScarecrowRenderer::new;
+        event.registerBlockEntityRenderer((BlockEntityType) ModBlockEntities.SCARECROW.get(), provider);
     }
 
     // Raw types here so this compiles whether or not GeckoLib's interface injection

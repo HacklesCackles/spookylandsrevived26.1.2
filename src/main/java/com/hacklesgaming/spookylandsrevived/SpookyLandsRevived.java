@@ -2,6 +2,7 @@ package com.hacklesgaming.spookylandsrevived;
 
 import org.slf4j.Logger;
 
+import com.hacklesgaming.spookylandsrevived.registry.ModBiomeModifiers;
 import com.hacklesgaming.spookylandsrevived.registry.ModBlockEntities;
 import com.hacklesgaming.spookylandsrevived.registry.ModBlocks;
 import com.hacklesgaming.spookylandsrevived.registry.ModCreativeTabs;
@@ -31,5 +32,6 @@ public class SpookyLandsRevived {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.CREATIVE_TABS.register(modEventBus);
+        ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
     }
 }
