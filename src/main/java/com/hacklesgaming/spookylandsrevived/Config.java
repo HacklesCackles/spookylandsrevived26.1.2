@@ -58,7 +58,7 @@ public class Config {
         BUILDER.push("ravens");
         RAVEN_SPAWN_WEIGHT = BUILDER
                 .comment("Spawn weight of ravens in the biomes from the spookylandsrevived:spawns_ravens tag. 0 = ravens never spawn naturally. Bats are 10. Needs a world restart.")
-                .defineInRange("spawnWeight", 8, 0, 100);
+                .defineInRange("spawnWeight", 9, 0, 100);
         RAVEN_MIN_GROUP = BUILDER
                 .comment("Smallest flock that spawns together. Needs a world restart.")
                 .defineInRange("minGroupSize", 2, 1, 16);
@@ -76,7 +76,7 @@ public class Config {
                 .define("rideMobs", true);
         RAVEN_BOLD_CHANCE = BUILDER
                 .comment("Chance (0.0 to 1.0) that a raven is bold: not scared of scarecrows, and likes to sit on them. Rolled once per raven. 0.01 = 1 in 100.")
-                .defineInRange("boldChance", 0.01, 0.0, 1.0);
+                .defineInRange("boldChance", 0.05, 0.0, 1.0);
         RAVENS_SOAR = BUILDER
                 .comment("Wild ravens now and then spiral up high, circle on a glide for a while (flockmates often join in), then spiral back down.")
                 .define("soaring", true);
