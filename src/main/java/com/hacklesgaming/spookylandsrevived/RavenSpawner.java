@@ -8,12 +8,16 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
@@ -36,6 +40,9 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 public class RavenSpawner {
     public static final TagKey<Biome> SPAWNS_RAVENS = TagKey.create(Registries.BIOME,
             Identifier.parse(SpookyLandsRevived.MOD_ID + ":spawns_ravens"));
+    /** Blocks ravens can spawn on top of: data/spookylandsrevived/tags/block/raven_spawnable_on.json */
+    public static final TagKey<Block> SPAWNABLE_ON = TagKey.create(Registries.BLOCK,
+            Identifier.parse(SpookyLandsRevived.MOD_ID + ":raven_spawnable_on"));
 
     /** How often (in ticks) each player gets a spawn roll. 200 ticks = 10 seconds. */
     private static final int INTERVAL = 200;
@@ -99,13 +106,25 @@ public class RavenSpawner {
             if (pos == null) {
                 continue;
             }
-            if (!RavenEntity.checkRavenSpawnRules(type, level, EntitySpawnReason.NATURAL, pos, random)) {
+            if (!checkSpawnRules(type, level, EntitySpawnReason.NATURAL, pos, random)) {
                 continue;
             }
             if (type.spawn(level, pos, EntitySpawnReason.NATURAL) != null) {
                 spawned++;
             }
         }
+    }
+
+    /**
+     * Spawn rule for ravens (also registered as the spawn placement in ModEvents): open sky above, and a block
+     * from the raven_spawnable_on tag underneath. Grass, leaves and logs always count, even if the tag is missing.
+     */
+    public static boolean checkSpawnRules(EntityType<RavenEntity> type, ServerLevelAccessor level,
+                                          EntitySpawnReason reason, BlockPos pos, RandomSource random) {
+        BlockState below = level.getBlockState(pos.below());
+        boolean goodGround = below.is(SPAWNABLE_ON) || below.is(BlockTags.ANIMALS_SPAWNABLE_ON)
+                || below.is(BlockTags.LEAVES) || below.is(BlockTags.LOGS);
+        return goodGround && (EntitySpawnReason.isSpawner(reason) || level.canSeeSky(pos));
     }
 
     /** Top of the ground or treetop at x/z (first open block), or null if the spot isn't loaded or isn't free. */

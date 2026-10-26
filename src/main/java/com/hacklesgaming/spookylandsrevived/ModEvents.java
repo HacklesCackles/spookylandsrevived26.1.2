@@ -20,8 +20,9 @@ public class ModEvents {
     @SubscribeEvent
     static void onSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         // MOTION_BLOCKING counts leaves, so ravens can spawn on top of trees.
+        // Which blocks they spawn on: the spookylandsrevived:raven_spawnable_on block tag.
         event.register(ModEntities.RAVEN.get(), SpawnPlacementTypes.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING, RavenEntity::checkRavenSpawnRules,
+                Heightmap.Types.MOTION_BLOCKING, RavenSpawner::checkSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
