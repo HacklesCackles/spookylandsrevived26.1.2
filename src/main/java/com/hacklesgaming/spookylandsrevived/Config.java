@@ -41,8 +41,7 @@ public class Config {
     }
 
     // ---- ravens ----
-    // Spawn settings are read when a world loads, so changing them needs a world restart.
-    // The behaviour toggles take effect right away.
+    // All raven settings take effect right away (no restart needed).
 
     public static final ModConfigSpec.IntValue RAVEN_SPAWN_WEIGHT;
     public static final ModConfigSpec.IntValue RAVEN_MIN_GROUP;
@@ -57,13 +56,13 @@ public class Config {
     static {
         BUILDER.push("ravens");
         RAVEN_SPAWN_WEIGHT = BUILDER
-                .comment("Spawn weight of ravens in the biomes from the spookylandsrevived:spawns_ravens tag. 0 = ravens never spawn naturally. Bats are 10. Needs a world restart.")
+                .comment("How often flocks of ravens spawn near players, in the biomes from the spookylandsrevived:spawns_ravens tag. Each player gets this % chance every 10 seconds (9 = about one flock every 2 minutes). Up to 10 wild ravens near a player. 0 = ravens never spawn naturally.")
                 .defineInRange("spawnWeight", 9, 0, 100);
         RAVEN_MIN_GROUP = BUILDER
-                .comment("Smallest flock that spawns together. Needs a world restart.")
+                .comment("Smallest flock that spawns together.")
                 .defineInRange("minGroupSize", 2, 1, 16);
         RAVEN_MAX_GROUP = BUILDER
-                .comment("Largest flock that spawns together (raised to minGroupSize if smaller). Needs a world restart.")
+                .comment("Largest flock that spawns together (raised to minGroupSize if smaller).")
                 .defineInRange("maxGroupSize", 4, 1, 16);
         RAVENS_STEAL_FROM_PLAYERS = BUILDER
                 .comment("Wild ravens swoop at players and snatch valuables from their inventory.")
