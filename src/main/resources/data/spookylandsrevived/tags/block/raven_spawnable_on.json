@@ -1,0 +1,35 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:animals_spawnable_on",
+    "#minecraft:grass_blocks",
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "#minecraft:terracotta",
+    "#minecraft:base_stone_overworld",
+    "#minecraft:leaves",
+    "#minecraft:logs",
+
+    "minecraft:mud",
+    "minecraft:muddy_mangrove_roots",
+    "minecraft:mangrove_roots",
+    "minecraft:moss_block",
+    "minecraft:pale_moss_block",
+    "minecraft:dirt_path",
+    "minecraft:farmland",
+    "minecraft:gravel",
+    "minecraft:clay",
+    "minecraft:calcite",
+    "minecraft:sandstone",
+    "minecraft:red_sandstone",
+    "minecraft:snow_block",
+    "minecraft:snow",
+    "minecraft:ice",
+    "minecraft:packed_ice",
+
+    { "id": "biomesoplenty:white_sandstone", "required": false },
+    { "id": "biomesoplenty:orange_sandstone", "required": false },
+    { "id": "biomesoplenty:black_sandstone", "required": false },
+    { "id": "biomesoplenty:dried_salt", "required": false }
+  ]
+}
