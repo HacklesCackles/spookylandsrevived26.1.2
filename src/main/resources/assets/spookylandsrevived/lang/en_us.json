@@ -72,6 +72,22 @@
   "spookylandsrevived.configuration.requireSneak": "Require Sneak",
   "spookylandsrevived.configuration.requireSneak.tooltip": "On: sneak-click changes the mode and a plain click keeps its normal job. Off: a plain click cycles follow, sit, wander.",
 
+  "spookylandsrevived.configuration.tree_cobwebs": "Tree Cobwebs",
+  "spookylandsrevived.configuration.tree_cobwebs.title": "Tree Cobwebs",
+  "spookylandsrevived.configuration.tree_cobwebs.tooltip": "Cobwebs that generate on trees in newly generated chunks.",
+  "spookylandsrevived.configuration.treeCobwebsEnabled": "Enabled",
+  "spookylandsrevived.configuration.treeCobwebsEnabled.tooltip": "Cobwebs generate on trees in newly generated chunks.",
+  "spookylandsrevived.configuration.chancePerTree": "Chance Per Tree",
+  "spookylandsrevived.configuration.chancePerTree.tooltip": "Chance (0.0 to 1.0) per tree to get 1-2 cobwebs. 0.03 = 3%.",
+
+  "spookylandsrevived.configuration.pumpkin_cobwebs": "Pumpkin Cobwebs",
+  "spookylandsrevived.configuration.pumpkin_cobwebs.title": "Pumpkin Cobwebs",
+  "spookylandsrevived.configuration.pumpkin_cobwebs.tooltip": "Cobwebs that generate next to natural pumpkins in newly generated chunks.",
+  "spookylandsrevived.configuration.pumpkinCobwebsEnabled": "Enabled",
+  "spookylandsrevived.configuration.pumpkinCobwebsEnabled.tooltip": "Cobwebs generate next to natural pumpkins in newly generated chunks.",
+  "spookylandsrevived.configuration.chancePerPumpkin": "Chance Per Pumpkin",
+  "spookylandsrevived.configuration.chancePerPumpkin.tooltip": "Chance (0.0 to 1.0) per pumpkin to get a cobweb beside it. 0.1 = 10%.",
+
   "jei.spookylandsrevived.scarecrow": "Place a scarecrow to protect your stuff. Ravens won't steal from players, pick up items, raid crops or build nests within 16 blocks of it, and any that come within 8 blocks get spooked and fly off. (Watch out for the odd bold raven: they aren't scared at all.)",
   "jei.spookylandsrevived.raven_nest": "Ravens build these on treetops and stash the loot they steal inside. Right-click a nest to take out one item at a time, or break it to spill everything. The item on top of the pile shows in the nest.",
   "jei.spookylandsrevived.raven": "Ravens steal valuables and ripe crops. Hit one to make it drop what it's carrying. Give a raven valuables to tame it (1 in 3 chance each). Tamed ravens never steal, follow you around, ride on your shoulder and bring you the odd gift. Right-click a tamed raven to make it stay or follow, or sneak-right-click to make it wander near where it is.",

@@ -120,5 +120,37 @@ public class Config {
         BUILDER.pop();
     }
 
+    // ---- cobwebs ----
+    // Cobwebs placed while new chunks generate. Changes apply to chunks generated after a restart.
+
+    public static final ModConfigSpec.BooleanValue TREE_COBWEBS_ENABLED;
+    public static final ModConfigSpec.DoubleValue TREE_COBWEB_CHANCE;
+    public static final ModConfigSpec.BooleanValue PUMPKIN_COBWEBS_ENABLED;
+    public static final ModConfigSpec.DoubleValue PUMPKIN_COBWEB_CHANCE;
+
+    static {
+        BUILDER.comment("Cobwebs that generate on trees in newly generated chunks.").push("tree_cobwebs");
+        TREE_COBWEBS_ENABLED = BUILDER
+                .comment("Cobwebs generate on trees in newly generated chunks.")
+                .translation("spookylandsrevived.configuration.treeCobwebsEnabled")
+                .define("enabled", true);
+        TREE_COBWEB_CHANCE = BUILDER
+                .comment("Chance (0.0 to 1.0) per tree to get 1-2 cobwebs. 0.03 = 3%.")
+                .translation("spookylandsrevived.configuration.chancePerTree")
+                .defineInRange("chancePerTree", 0.03, 0.0, 1.0);
+        BUILDER.pop();
+
+        BUILDER.comment("Cobwebs that generate next to natural pumpkins in newly generated chunks.").push("pumpkin_cobwebs");
+        PUMPKIN_COBWEBS_ENABLED = BUILDER
+                .comment("Cobwebs generate next to natural pumpkins in newly generated chunks.")
+                .translation("spookylandsrevived.configuration.pumpkinCobwebsEnabled")
+                .define("enabled", true);
+        PUMPKIN_COBWEB_CHANCE = BUILDER
+                .comment("Chance (0.0 to 1.0) per pumpkin to get a cobweb beside it. 0.1 = 10%.")
+                .translation("spookylandsrevived.configuration.chancePerPumpkin")
+                .defineInRange("chancePerPumpkin", 0.1, 0.0, 1.0);
+        BUILDER.pop();
+    }
+
     static final ModConfigSpec SPEC = BUILDER.build();
 }

@@ -37,5 +37,6 @@ public class SpookyLandsRevived {
         ModSounds.SOUND_EVENTS.register(modEventBus);
         ModCreativeTabs.CREATIVE_TABS.register(modEventBus);
         ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
+        ModFeatures.FEATURES.register(modEventBus);
     }
 }
