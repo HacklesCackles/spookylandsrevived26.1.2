@@ -1,6 +1,7 @@
 package com.hacklesgaming.spookylandsrevived;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -82,6 +83,40 @@ public class Config {
         RAVEN_SOAR_HEIGHT = BUILDER
                 .comment("How high above the ground soaring ravens circle, in blocks (each raven varies a little).")
                 .defineInRange("soarHeight", 20, 8, 48);
+        BUILDER.pop();
+    }
+
+    // ---- pet modes ----
+    // Sneak-click a tamed pet (vanilla or modded) to make it wander near where it is instead of
+    // following you. All of these take effect right away (no restart needed).
+
+    public static final ModConfigSpec.BooleanValue PET_MODES_ENABLED;
+    public static final ModConfigSpec.BooleanValue PET_INCLUDE_VANILLA;
+    public static final ModConfigSpec.BooleanValue PET_INCLUDE_MODDED;
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> PET_EXCLUDED;
+    public static final ModConfigSpec.IntValue PET_WANDER_RADIUS;
+    public static final ModConfigSpec.BooleanValue PET_REQUIRE_SNEAK;
+
+    static {
+        BUILDER.push("pet_modes");
+        PET_MODES_ENABLED = BUILDER
+                .comment("Master switch for the pet wander mode (sneak-click a tamed pet to make it wander near here instead of following you).")
+                .define("enabled", true);
+        PET_INCLUDE_VANILLA = BUILDER
+                .comment("Apply to vanilla pets (wolf, cat, parrot).")
+                .define("includeVanilla", true);
+        PET_INCLUDE_MODDED = BUILDER
+                .comment("Apply to tamable animals from other mods.")
+                .define("includeModded", true);
+        PET_EXCLUDED = BUILDER
+                .comment("Entity IDs to leave alone, e.g. [\"somemod:some_pet\", \"othermod:dragon\"]. (Pack makers can also use the spookylandsrevived:no_mode_cycle entity type tag.)")
+                .defineListAllowEmpty("excludedPets", List.of(), () -> "somemod:some_pet", o -> o instanceof String);
+        PET_WANDER_RADIUS = BUILDER
+                .comment("How far from its home spot a wandering pet roams, in blocks.")
+                .defineInRange("wanderRadius", 8, 2, 32);
+        PET_REQUIRE_SNEAK = BUILDER
+                .comment("true: sneak-click changes the mode and a plain click keeps its normal job (vanilla's sit toggle, other mods' menus). false: a plain click cycles follow, sit, wander and back.")
+                .define("requireSneak", true);
         BUILDER.pop();
     }
 

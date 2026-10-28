@@ -33,7 +33,7 @@ public class RavenShoulderGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!raven.isTame() || raven.isOrderedToSit() || raven.isOnShoulder() || raven.hasCarriedItem()
+        if (!raven.isTame() || raven.isOrderedToSit() || raven.isWandering() || raven.isOnShoulder() || raven.hasCarriedItem()
                 || raven.isBathing() || !raven.canLandOnShoulderAgain()) {
             stillChecks = 0;
             return false;
@@ -67,7 +67,7 @@ public class RavenShoulderGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return owner != null && ticks < MAX_TICKS && !raven.isOnShoulder() && !raven.isOrderedToSit()
-                && RavenEntity.canCarryRaven(owner) && owner.level() == raven.level();
+                && !raven.isWandering() && RavenEntity.canCarryRaven(owner) && owner.level() == raven.level();
     }
 
     @Override

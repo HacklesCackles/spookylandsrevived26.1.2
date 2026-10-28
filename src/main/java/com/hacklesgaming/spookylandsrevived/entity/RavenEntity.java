@@ -94,7 +94,8 @@ import org.jspecify.annotations.Nullable;
  * Hit it and it drops what it's carrying.
  * Nests: takes loot home to its nest (builds one on a treetop if needed; flockmates share it).
  * Scarecrows: no theft/crop raids/nest building within 16 blocks; spooked away within 8.
- * Taming: give it valuables (1 in 3). Tamed: right-click toggles sit/follow, never steals
+ * Taming: give it valuables (1 in 3). Tamed: right-click toggles sit/follow, sneak-right-click
+ * makes it wander near where it is instead of following (and back), never steals
  * or raids crops, and brings its owner valuables it finds lying around plus the odd gift.
  * Shoulder: lands on its owner's shoulder when they stand still; hops off on sneak, hits, water, falls.
  * Riding: wild ravens now and then sit on the back of an animal or a villager's head for a while.
@@ -746,8 +747,79 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
     public void setOrderedToSit(boolean sit) {
         this.orderedToSit = sit;
         if (sit) {
+            stopWandering(); // sitting wins over wandering
             this.getNavigation().stop();
         }
+    }
+
+    // ---- wander mode (sneak-click): roams near a home spot instead of following the owner ----
+
+    private boolean wandering;
+    private @Nullable BlockPos wanderHome;
+
+    public boolean isWandering() {
+        return wandering;
+    }
+
+    /** Stop following and roam within the configured radius of where the raven is now. */
+    public void startWandering() {
+        this.orderedToSit = false;
+        this.wandering = true;
+        this.wanderHome = this.blockPosition().immutable();
+        this.getNavigation().stop();
+    }
+
+    public void stopWandering() {
+        this.wandering = false;
+        this.wanderHome = null;
+    }
+
+    /** The spot a wandering raven stays near, or null when it isn't wandering. */
+    public @Nullable BlockPos getWanderHome() {
+        return wandering ? wanderHome : null;
+    }
+
+    /** True if pos is within the wander radius of the home spot (always true when not wandering). */
+    public boolean isWithinWanderRange(Vec3 pos) {
+        if (!wandering || wanderHome == null) {
+            return true;
+        }
+        double radius = Config.PET_WANDER_RADIUS.get();
+        return Vec3.atCenterOf(wanderHome).distanceToSqr(pos) <= radius * radius;
+    }
+
+    /**
+     * Owner clicked the raven. Pet modes off or plain click with requireSneak on: toggles
+     * sit / follow like before (a plain click on a wandering raven sits it). Sneak-click:
+     * follow or sit -> wander -> follow. requireSneak off: plain click cycles follow -> sit -> wander.
+     */
+    private void cycleMode(Player player) {
+        boolean modes = Config.PET_MODES_ENABLED.get();
+        boolean requireSneak = Config.PET_REQUIRE_SNEAK.get();
+        boolean modeClick = modes && (player.isShiftKeyDown() || !requireSneak);
+        if (!modes && wandering) {
+            stopWandering();
+        }
+
+        String message;
+        if (wandering) {
+            if (modeClick) {
+                stopWandering();
+                message = "entity.spookylandsrevived.raven.following";
+            } else {
+                setOrderedToSit(true);
+                message = "entity.spookylandsrevived.raven.sitting";
+            }
+        } else if (modeClick && (requireSneak || orderedToSit)) {
+            startWandering();
+            message = "entity.spookylandsrevived.raven.wandering";
+        } else {
+            setOrderedToSit(!orderedToSit);
+            message = orderedToSit
+                    ? "entity.spookylandsrevived.raven.sitting"
+                    : "entity.spookylandsrevived.raven.following";
+        }
+        player.sendOverlayMessage(Component.translatable(message));
     }
 
     public @Nullable Player getOwner() {
@@ -805,10 +877,7 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         }
 
         if (this.level() instanceof ServerLevel) {
-            setOrderedToSit(!orderedToSit);
-            player.sendOverlayMessage(Component.translatable(orderedToSit
-                    ? "entity.spookylandsrevived.raven.sitting"
-                    : "entity.spookylandsrevived.raven.following"));
+            cycleMode(player);
         }
         return InteractionResult.SUCCESS;
     }
@@ -914,7 +983,7 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
             }
             if (!player.isAlive() || player.isSpectator() || player.isInWater() || player.isSleeping()
                     || player.isFallFlying() || player.isPassenger() || player.hurtTime > 0
-                    || player.fallDistance > 1.0F || !isOwnedBy(player) || isOrderedToSit()) {
+                    || player.fallDistance > 1.0F || !isOwnedBy(player) || isOrderedToSit() || isWandering()) {
                 hopOffShoulder(SHOULDER_COOLDOWN_TICKS);
                 return;
             }
@@ -987,6 +1056,8 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         output.storeNullable("HomeNest", BlockPos.CODEC, homeNest);
         output.storeNullable("Owner", UUIDUtil.CODEC, ownerUUID);
         output.putBoolean("Sitting", orderedToSit);
+        output.putBoolean("Wandering", wandering);
+        output.storeNullable("WanderHome", BlockPos.CODEC, wanderHome);
         output.putBoolean("Bold", bold);
         output.putBoolean("BoldRolled", boldRolled);
     }
@@ -999,6 +1070,8 @@ public class RavenEntity extends PathfinderMob implements GeoEntity {
         ownerUUID = input.read("Owner", UUIDUtil.CODEC).orElse(null);
         this.entityData.set(DATA_TAME, ownerUUID != null);
         orderedToSit = input.getBooleanOr("Sitting", false);
+        wanderHome = input.read("WanderHome", BlockPos.CODEC).orElse(null);
+        wandering = wanderHome != null && !orderedToSit && input.getBooleanOr("Wandering", false);
         bold = input.getBooleanOr("Bold", false);
         boldRolled = input.getBooleanOr("BoldRolled", false);
     }
