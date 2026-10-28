@@ -30,6 +30,12 @@
   "block.spookylandsrevived.scarecrow": "Scarecrow",
   "entity.spookylandsrevived.raven.sitting": "Raven is staying put",
   "entity.spookylandsrevived.raven.following": "Raven is following you",
+  "entity.spookylandsrevived.raven.wandering": "Raven will wander near here",
+
+  "message.spookylandsrevived.pet_mode.sit": "%s is sitting",
+  "message.spookylandsrevived.pet_mode.wander": "%s will wander near here",
+  "message.spookylandsrevived.pet_mode.follow": "%s is following you",
+
 
   "spookylandsrevived.configuration.ravens": "Ravens",
   "spookylandsrevived.configuration.ravens.title": "Ravens",
@@ -51,10 +57,25 @@
   "spookylandsrevived.configuration.soaring.tooltip": "Wild ravens now and then spiral up high, circle on a glide for a while, then spiral back down.",
   "spookylandsrevived.configuration.soarHeight": "Soar Height",
   "spookylandsrevived.configuration.soarHeight.tooltip": "How high above the ground soaring ravens circle, in blocks.",
+  "spookylandsrevived.configuration.pet_modes": "Pet Wander Mode",
+  "spookylandsrevived.configuration.pet_modes.title": "Pet Wander Mode",
+  "spookylandsrevived.configuration.enabled": "Enabled",
+  "spookylandsrevived.configuration.enabled.tooltip": "Master switch for the pet wander mode (sneak-click a tamed pet to make it wander near here instead of following you).",
+  "spookylandsrevived.configuration.includeVanilla": "Vanilla Pets",
+  "spookylandsrevived.configuration.includeVanilla.tooltip": "Apply to vanilla pets (wolf, cat, parrot).",
+  "spookylandsrevived.configuration.includeModded": "Modded Pets",
+  "spookylandsrevived.configuration.includeModded.tooltip": "Apply to tamable animals from other mods.",
+  "spookylandsrevived.configuration.excludedPets": "Excluded Pets",
+  "spookylandsrevived.configuration.excludedPets.tooltip": "Entity IDs to leave alone, e.g. somemod:some_pet. Pack makers can also use the spookylandsrevived:no_mode_cycle entity type tag.",
+  "spookylandsrevived.configuration.wanderRadius": "Wander Radius",
+  "spookylandsrevived.configuration.wanderRadius.tooltip": "How far from its home spot a wandering pet roams, in blocks.",
+  "spookylandsrevived.configuration.requireSneak": "Require Sneak",
+  "spookylandsrevived.configuration.requireSneak.tooltip": "On: sneak-click changes the mode and a plain click keeps its normal job. Off: a plain click cycles follow, sit, wander.",
+
 
   "jei.spookylandsrevived.scarecrow": "Place a scarecrow to protect your stuff. Ravens won't steal from players, pick up items, raid crops or build nests within 16 blocks of it, and any that come within 8 blocks get spooked and fly off. (Watch out for the odd bold raven: they aren't scared at all.)",
   "jei.spookylandsrevived.raven_nest": "Ravens build these on treetops and stash the loot they steal inside. Right-click a nest to take out one item at a time, or break it to spill everything. The item on top of the pile shows in the nest.",
-  "jei.spookylandsrevived.raven": "Ravens steal valuables and ripe crops. Hit one to make it drop what it's carrying. Give a raven valuables to tame it (1 in 3 chance each). Tamed ravens never steal, follow you around, ride on your shoulder and bring you the odd gift. Right-click a tamed raven to make it stay or follow.",
+  "jei.spookylandsrevived.raven": "Ravens steal valuables and ripe crops. Hit one to make it drop what it's carrying. Give a raven valuables to tame it (1 in 3 chance each). Tamed ravens never steal, follow you around, ride on your shoulder and bring you the odd gift. Right-click a tamed raven to make it stay or follow, or sneak-right-click to make it wander near where it is.",
   "subtitles.spookylandsrevived.entity.raven.caw": "Raven caws",
   "subtitles.spookylandsrevived.entity.raven.hurt": "Raven hurts"
 }

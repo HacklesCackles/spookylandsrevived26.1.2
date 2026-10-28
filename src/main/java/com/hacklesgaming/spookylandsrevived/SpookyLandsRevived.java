@@ -2,6 +2,7 @@ package com.hacklesgaming.spookylandsrevived;
 
 import org.slf4j.Logger;
 
+import com.hacklesgaming.spookylandsrevived.registry.ModAttachments;
 import com.hacklesgaming.spookylandsrevived.registry.ModBiomeModifiers;
 import com.hacklesgaming.spookylandsrevived.registry.ModBlockEntities;
 import com.hacklesgaming.spookylandsrevived.registry.ModBlocks;
@@ -28,6 +29,7 @@ public class SpookyLandsRevived {
 
     public SpookyLandsRevived(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        ModAttachments.ATTACHMENT_TYPES.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);

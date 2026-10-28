@@ -29,7 +29,7 @@ public class RavenFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!raven.isTame() || raven.isOrderedToSit()) {
+        if (!raven.isTame() || raven.isOrderedToSit() || raven.isWandering()) {
             return false;
         }
         Player player = raven.getOwner();
@@ -43,7 +43,7 @@ public class RavenFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return owner != null && owner.isAlive() && !raven.isOrderedToSit()
+        return owner != null && owner.isAlive() && !raven.isOrderedToSit() && !raven.isWandering()
                 && owner.level() == raven.level()
                 && raven.distanceToSqr(owner) > STOP_DISTANCE * STOP_DISTANCE;
     }

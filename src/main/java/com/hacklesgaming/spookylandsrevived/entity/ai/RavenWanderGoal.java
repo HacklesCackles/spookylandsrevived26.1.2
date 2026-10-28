@@ -38,6 +38,12 @@ public class RavenWanderGoal extends WaterAvoidingRandomFlyingGoal {
 
     @Override
     protected @Nullable Vec3 getPosition() {
+        // Wander mode: drifted out of range, so head straight back to the home spot.
+        BlockPos home = raven.getWanderHome();
+        if (home != null && !raven.isWithinWanderRange(raven.position())) {
+            return Vec3.atBottomCenterOf(home).add(0.0, 1.0, 0.0);
+        }
+
         // A flock takeoff always means flying, never a walk.
         boolean flockFlight = raven.consumeFlockFlight();
 
@@ -94,6 +100,7 @@ public class RavenWanderGoal extends WaterAvoidingRandomFlyingGoal {
 
     private boolean isSafe(@Nullable Vec3 pos) {
         return pos != null && !raven.isHazardBelow(BlockPos.containing(pos))
-                && !raven.isNearScarecrow(BlockPos.containing(pos));
+                && !raven.isNearScarecrow(BlockPos.containing(pos))
+                && raven.isWithinWanderRange(pos);
     }
 }
