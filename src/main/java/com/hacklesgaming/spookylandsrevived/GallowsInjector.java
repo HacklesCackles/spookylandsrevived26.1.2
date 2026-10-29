@@ -25,7 +25,7 @@ import java.util.Set;
 public class GallowsInjector {
 
     private static final String MODID = "spookylandsrevived";
-    private static final String STRUCTURE = MODID + ":village/plains/gallows";
+    private static final String STRUCTURE = MODID + ":village/plains/village_gallows";
 
     // village style -> processor list name
     private static final Map<String, String> STYLES = Map.of(

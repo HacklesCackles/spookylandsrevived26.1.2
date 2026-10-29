@@ -1,9 +1,9 @@
 {
   "type": "minecraft:jigsaw",
-  "start_pool": "spookylandsrevived:tower_dungeon001",
+  "start_pool": "spookylandsrevived:tower_dungeon",
   "size": 2,
   "max_distance_from_center": 80,
-  "biomes": "#spookylandsrevived:has_structure/tower_dungeon001_biomes",
+  "biomes": "#spookylandsrevived:has_structure/tower_dungeon_biomes",
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",
   "start_height": {

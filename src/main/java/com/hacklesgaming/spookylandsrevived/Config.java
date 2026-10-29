@@ -9,36 +9,41 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static final ModConfigSpec.IntValue GALLOWS_WEIGHT = BUILDER
-            .comment("Spawn weight of the gallows in villages. 0 disables it. Vanilla houses are about 2-4.")
-            .defineInRange("gallowsWeight", 10, 0, 50);
+    // Sections are written to the config file in the order they are defined below:
+    // pet modes, ravens, cobwebs, structures.
 
-    public static class StructureTuning {
-        public final ModConfigSpec.DoubleValue chance;
-        public final ModConfigSpec.IntValue spacing;
-        public final ModConfigSpec.IntValue separation;
+    // ---- pet modes ----
+    // Sneak-click a tamed pet (vanilla or modded) to make it wander near where it is instead of
+    // following you. All of these take effect right away (no restart needed).
 
-        StructureTuning(String name) {
-            BUILDER.push(name);
-            chance = BUILDER
-                    .comment("Chance (0.0 to 1.0) that a spot in the grid actually gets this structure. -1 = use the value from the data file.")
-                    .defineInRange("chance", -1.0, -1.0, 1.0);
-            spacing = BUILDER
-                    .comment("Average grid size in chunks. Bigger = rarer. 0 = use the value from the data file.")
-                    .defineInRange("spacing", 0, 0, 200);
-            separation = BUILDER
-                    .comment("Minimum gap in chunks inside a grid cell. Must be smaller than spacing. 0 = use the value from the data file.")
-                    .defineInRange("separation", 0, 0, 199);
-            BUILDER.pop();
-        }
-    }
+    public static final ModConfigSpec.BooleanValue PET_MODES_ENABLED;
+    public static final ModConfigSpec.BooleanValue PET_INCLUDE_VANILLA;
+    public static final ModConfigSpec.BooleanValue PET_INCLUDE_MODDED;
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> PET_EXCLUDED;
+    public static final ModConfigSpec.IntValue PET_WANDER_RADIUS;
+    public static final ModConfigSpec.BooleanValue PET_REQUIRE_SNEAK;
 
-    // key = structure_set file name (no .json) in data/spookylandsrevived/worldgen/structure_set/
-    public static final Map<String, StructureTuning> STRUCTURES = new LinkedHashMap<>();
     static {
-        for (String name : new String[] { "abandonedhouse_001", "tower_dungeon001", "spider_den001", "abandoned_cemetery001" }) {
-            STRUCTURES.put(name, new StructureTuning(name));
-        }
+        BUILDER.push("pet_modes");
+        PET_MODES_ENABLED = BUILDER
+                .comment("Master switch for the pet wander mode (sneak-click a tamed pet to make it wander near here instead of following you).")
+                .define("enabled", true);
+        PET_INCLUDE_VANILLA = BUILDER
+                .comment("Apply to vanilla pets (wolf, cat, parrot).")
+                .define("includeVanilla", true);
+        PET_INCLUDE_MODDED = BUILDER
+                .comment("Apply to tamable animals from other mods.")
+                .define("includeModded", true);
+        PET_EXCLUDED = BUILDER
+                .comment("Entity IDs to leave alone, e.g. [\"somemod:some_pet\", \"othermod:dragon\"]. (Pack makers can also use the spookylandsrevived:no_mode_cycle entity type tag.)")
+                .defineListAllowEmpty("excludedPets", List.of(), () -> "somemod:some_pet", o -> o instanceof String);
+        PET_WANDER_RADIUS = BUILDER
+                .comment("How far from its home spot a wandering pet roams, in blocks.")
+                .defineInRange("wanderRadius", 8, 2, 32);
+        PET_REQUIRE_SNEAK = BUILDER
+                .comment("true: sneak-click changes the mode and a plain click keeps its normal job (vanilla's sit toggle, other mods' menus). false: a plain click cycles follow, sit, wander and back.")
+                .define("requireSneak", true);
+        BUILDER.pop();
     }
 
     // ---- ravens ----
@@ -86,40 +91,6 @@ public class Config {
         BUILDER.pop();
     }
 
-    // ---- pet modes ----
-    // Sneak-click a tamed pet (vanilla or modded) to make it wander near where it is instead of
-    // following you. All of these take effect right away (no restart needed).
-
-    public static final ModConfigSpec.BooleanValue PET_MODES_ENABLED;
-    public static final ModConfigSpec.BooleanValue PET_INCLUDE_VANILLA;
-    public static final ModConfigSpec.BooleanValue PET_INCLUDE_MODDED;
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> PET_EXCLUDED;
-    public static final ModConfigSpec.IntValue PET_WANDER_RADIUS;
-    public static final ModConfigSpec.BooleanValue PET_REQUIRE_SNEAK;
-
-    static {
-        BUILDER.push("pet_modes");
-        PET_MODES_ENABLED = BUILDER
-                .comment("Master switch for the pet wander mode (sneak-click a tamed pet to make it wander near here instead of following you).")
-                .define("enabled", true);
-        PET_INCLUDE_VANILLA = BUILDER
-                .comment("Apply to vanilla pets (wolf, cat, parrot).")
-                .define("includeVanilla", true);
-        PET_INCLUDE_MODDED = BUILDER
-                .comment("Apply to tamable animals from other mods.")
-                .define("includeModded", true);
-        PET_EXCLUDED = BUILDER
-                .comment("Entity IDs to leave alone, e.g. [\"somemod:some_pet\", \"othermod:dragon\"]. (Pack makers can also use the spookylandsrevived:no_mode_cycle entity type tag.)")
-                .defineListAllowEmpty("excludedPets", List.of(), () -> "somemod:some_pet", o -> o instanceof String);
-        PET_WANDER_RADIUS = BUILDER
-                .comment("How far from its home spot a wandering pet roams, in blocks.")
-                .defineInRange("wanderRadius", 8, 2, 32);
-        PET_REQUIRE_SNEAK = BUILDER
-                .comment("true: sneak-click changes the mode and a plain click keeps its normal job (vanilla's sit toggle, other mods' menus). false: a plain click cycles follow, sit, wander and back.")
-                .define("requireSneak", true);
-        BUILDER.pop();
-    }
-
     // ---- cobwebs ----
     // Cobwebs placed while new chunks generate. Changes apply to chunks generated after a restart.
 
@@ -149,6 +120,45 @@ public class Config {
                 .comment("Chance (0.0 to 1.0) per pumpkin to get a cobweb beside it. 0.1 = 10%.")
                 .translation("spookylandsrevived.configuration.chancePerPumpkin")
                 .defineInRange("chancePerPumpkin", 0.1, 0.0, 1.0);
+        BUILDER.pop();
+    }
+
+    // ---- structures ----
+    // Changes apply after a restart, to chunks generated from then on.
+
+    public static class StructureTuning {
+        public final ModConfigSpec.DoubleValue chance;
+        public final ModConfigSpec.IntValue spacing;
+        public final ModConfigSpec.IntValue separation;
+
+        StructureTuning(String name) {
+            BUILDER.push(name);
+            chance = BUILDER
+                    .comment("Chance (0.0 to 1.0) that a spot in the grid actually gets this structure. -1 = use the value from the data file.")
+                    .defineInRange("chance", -1.0, -1.0, 1.0);
+            spacing = BUILDER
+                    .comment("Average grid size in chunks. Bigger = rarer. 0 = use the value from the data file.")
+                    .defineInRange("spacing", 0, 0, 200);
+            separation = BUILDER
+                    .comment("Minimum gap in chunks inside a grid cell. Must be smaller than spacing. 0 = use the value from the data file.")
+                    .defineInRange("separation", 0, 0, 199);
+            BUILDER.pop();
+        }
+    }
+
+    public static final ModConfigSpec.IntValue GALLOWS_WEIGHT;
+
+    // key = structure_set file name (no .json) in data/spookylandsrevived/worldgen/structure_set/
+    public static final Map<String, StructureTuning> STRUCTURES = new LinkedHashMap<>();
+
+    static {
+        BUILDER.comment("Structure rarity and spacing.").push("structures");
+        GALLOWS_WEIGHT = BUILDER
+                .comment("Spawn weight of the gallows in villages. 0 disables it. Vanilla houses are about 2-4.")
+                .defineInRange("gallowsWeight", 10, 0, 50);
+        for (String name : new String[] { "abandoned_house", "tower_dungeon", "spider_den", "abandoned_cemetery", "climbers_fall" }) {
+            STRUCTURES.put(name, new StructureTuning(name));
+        }
         BUILDER.pop();
     }
 

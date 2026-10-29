@@ -16,12 +16,12 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Finds a tower dungeon (spookylandsrevived:tower_dungeon001) near a position, using the
+ * Finds a tower dungeon (spookylandsrevived:tower_dungeon) near a position, using the
  * structure references saved in each chunk. Only looks at chunks that are already loaded,
  * so it never loads or generates terrain.
  */
 public final class TowerLocator {
-    private static final Identifier TOWER = Identifier.fromNamespaceAndPath(SpookyLandsRevived.MOD_ID, "tower_dungeon001");
+    private static final Identifier TOWER = Identifier.fromNamespaceAndPath(SpookyLandsRevived.MOD_ID, "tower_dungeon");
 
     private TowerLocator() {
     }

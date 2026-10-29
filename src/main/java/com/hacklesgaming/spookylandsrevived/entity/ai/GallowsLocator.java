@@ -19,12 +19,12 @@ import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Finds the village gallows piece (spookylandsrevived:village/plains/gallows) near a position,
+ * Finds the village gallows piece (spookylandsrevived:village/plains/village_gallows) near a position,
  * using the structure data saved with the world, so it works for every village style
  * (the biome processors swap the wood, but it's still the same piece).
  */
 public final class GallowsLocator {
-    private static final String GALLOWS_TEMPLATE = "spookylandsrevived:village/plains/gallows";
+    private static final String GALLOWS_TEMPLATE = "spookylandsrevived:village/plains/village_gallows";
 
     private GallowsLocator() {
     }
