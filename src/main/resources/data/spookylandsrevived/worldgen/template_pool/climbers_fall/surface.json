@@ -1,0 +1,41 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "spookylandsrevived:climbers_fall/surface_a",
+        "processors": "spookylandsrevived:climbers_fall_snow",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "spookylandsrevived:climbers_fall/surface_b",
+        "processors": "spookylandsrevived:climbers_fall_snow",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "spookylandsrevived:climbers_fall/surface_c",
+        "processors": "spookylandsrevived:climbers_fall_snow",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "spookylandsrevived:climbers_fall/surface_d",
+        "processors": "spookylandsrevived:climbers_fall_snow",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

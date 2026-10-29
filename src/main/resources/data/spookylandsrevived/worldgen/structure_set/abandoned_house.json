@@ -1,13 +1,13 @@
 {
   "structures": [
     {
-      "structure": "spookylandsrevived:tower_dungeon001",
+      "structure": "spookylandsrevived:abandoned_house",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 7057068,
+    "salt": 7057067,
     "spacing": 28,
     "separation": 16
   }

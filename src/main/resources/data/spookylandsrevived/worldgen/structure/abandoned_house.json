@@ -1,9 +1,9 @@
 {
   "type": "minecraft:jigsaw",
-  "start_pool": "spookylandsrevived:abandoned_cemetery001",
+  "start_pool": "spookylandsrevived:abandoned_house",
   "size": 2,
   "max_distance_from_center": 80,
-  "biomes": "#spookylandsrevived:has_structure/abandoned_cemetery001_biomes",
+  "biomes": "#spookylandsrevived:has_structure/abandoned_house_biomes",
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",
   "start_height": {

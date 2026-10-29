@@ -1,13 +1,13 @@
 {
   "structures": [
     {
-      "structure": "spookylandsrevived:abandoned_cemetery001",
+      "structure": "spookylandsrevived:spider_den",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 7057070,
+    "salt": 7057069,
     "spacing": 28,
     "separation": 16
   }

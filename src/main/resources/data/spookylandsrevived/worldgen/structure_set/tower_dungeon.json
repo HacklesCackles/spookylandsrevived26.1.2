@@ -1,13 +1,13 @@
 {
   "structures": [
     {
-      "structure": "spookylandsrevived:spider_den001",
+      "structure": "spookylandsrevived:tower_dungeon",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 7057069,
+    "salt": 7057068,
     "spacing": 28,
     "separation": 16
   }
