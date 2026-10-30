@@ -31,6 +31,18 @@ fir clearing when that mod is installed.
   instead of following you.
 - **Cobwebs**: generate on some trees and next to natural pumpkins in new chunks.
 
+## Villager trades
+
+- **Leatherworker (novice)**: always buys a saddle for 1 emerald, on top of its 2 random novice trades.
+- **Librarian (master)**: sells any of the 16 dyed candles (3 emeralds each), each color equally likely. Still 2 trades,
+  picked from the 14 extra colors added to the vanilla red and yellow (`data/minecraft/tags/villager_trade/librarian/level_5.json`
+  and `data/minecraft/trade_set/librarian/level_5.json`).
+
+Guaranteed trades are data files in `data/spookylandsrevived/villager_trade`, listed in the tag
+`data/spookylandsrevived/tags/villager_trade/guaranteed/<profession>/level_<n>.json` (1 novice to 5 master).
+They are added when a villager reaches that level (`VillagerTradesMixin`), so villagers that already
+passed it keep their old trades.
+
 ## Configuration
 
 A config file (`spookylandsrevived-common.toml`) is created in the `config` folder. It can also be edited in game from the
