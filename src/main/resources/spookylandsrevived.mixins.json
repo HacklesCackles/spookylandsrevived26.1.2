@@ -3,7 +3,8 @@
   "package": "com.hacklesgaming.spookylandsrevived.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "JigsawPlacerMixin"
+    "JigsawPlacerMixin",
+    "VillagerTradesMixin"
   ],
   "injectors": {
     "defaultRequire": 1
