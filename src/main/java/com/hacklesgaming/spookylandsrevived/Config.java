@@ -156,7 +156,7 @@ public class Config {
         GALLOWS_WEIGHT = BUILDER
                 .comment("Spawn weight of the gallows in villages. 0 disables it. Vanilla houses are about 2-4.")
                 .defineInRange("gallowsWeight", 10, 0, 50);
-        for (String name : new String[] { "abandoned_house", "tower_dungeon", "spider_den", "abandoned_cemetery", "climbers_fall" }) {
+        for (String name : new String[] { "abandoned_house", "tower_dungeon", "spider_den", "abandoned_cemetery", "climbers_fall", "tower_ruin" }) {
             STRUCTURES.put(name, new StructureTuning(name));
         }
         BUILDER.pop();

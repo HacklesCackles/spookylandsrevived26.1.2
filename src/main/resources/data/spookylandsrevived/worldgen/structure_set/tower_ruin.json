@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "spookylandsrevived:tower_ruin",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 48213377,
+    "spacing": 24,
+    "separation": 10
+  }
+}
