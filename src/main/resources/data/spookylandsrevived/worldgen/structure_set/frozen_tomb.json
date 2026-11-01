@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "spookylandsrevived:frozen_tomb",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 39017744,
+    "spacing": 28,
+    "separation": 12
+  }
+}
