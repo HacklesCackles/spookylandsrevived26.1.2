@@ -8,6 +8,8 @@
   "spookylandsrevived.configuration.structures.tooltip": "Structure rarity and spacing.",
   "spookylandsrevived.configuration.gallowsWeight": "Gallows Weight",
   "spookylandsrevived.configuration.gallowsWeight.tooltip": "Spawn weight of the gallows in villages. 0 disables it. Vanilla houses are about 2-4.",
+  "spookylandsrevived.configuration.minStructureDistance": "Min Distance Between Structures",
+  "spookylandsrevived.configuration.minStructureDistance.tooltip": "Keeps this mod's structures at least this many chunks apart. When two would be too close, the one listed first wins. 0 = off.",
 
   "spookylandsrevived.configuration.abandoned_house": "Abandoned House",
   "spookylandsrevived.configuration.abandoned_house.title": "Abandoned House",

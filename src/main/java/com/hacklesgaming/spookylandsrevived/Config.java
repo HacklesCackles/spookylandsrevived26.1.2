@@ -147,6 +147,7 @@ public class Config {
     }
 
     public static final ModConfigSpec.IntValue GALLOWS_WEIGHT;
+    public static final ModConfigSpec.IntValue MIN_STRUCTURE_DISTANCE;
 
     // key = structure_set file name (no .json) in data/spookylandsrevived/worldgen/structure_set/
     public static final Map<String, StructureTuning> STRUCTURES = new LinkedHashMap<>();
@@ -156,6 +157,9 @@ public class Config {
         GALLOWS_WEIGHT = BUILDER
                 .comment("Spawn weight of the gallows in villages. 0 disables it. Vanilla houses are about 2-4.")
                 .defineInRange("gallowsWeight", 10, 0, 50);
+        MIN_STRUCTURE_DISTANCE = BUILDER
+                .comment("Keeps this mod's structures at least this many chunks apart so they don't spawn on top of each other. When two would be too close, the one listed first below wins. Villages and other mods are not affected. 0 = off.")
+                .defineInRange("minStructureDistance", 6, 0, 32);
         for (String name : new String[] { "abandoned_house", "tower_dungeon", "spider_den", "abandoned_cemetery", "climbers_fall", "tower_ruin", "frozen_tomb" }) {
             STRUCTURES.put(name, new StructureTuning(name));
         }
