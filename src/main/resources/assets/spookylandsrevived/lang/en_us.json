@@ -21,6 +21,8 @@
   "spookylandsrevived.configuration.climbers_fall.title": "Climber's Fall",
   "spookylandsrevived.configuration.tower_ruin": "Tower Ruin",
   "spookylandsrevived.configuration.tower_ruin.title": "Tower Ruin",
+  "spookylandsrevived.configuration.frozen_tomb": "Frozen Tomb",
+  "spookylandsrevived.configuration.frozen_tomb.title": "Frozen Tomb",
 
   "spookylandsrevived.configuration.chance": "Chance",
   "spookylandsrevived.configuration.chance.tooltip": "Chance (0.0 to 1.0) that a spot in the grid actually gets this structure. -1 = use the value from the data file.",
