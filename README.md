@@ -7,11 +7,13 @@ eerie touches to the world. Requires GeckoLib. JEI is optional (adds info pages)
 
 | Structure | ID | Notes |
 |---|---|---|
-| Abandoned house | `abandoned_house` | |
+| Abandoned house | `abandoned_house` | Has a hidden stash chest |
 | Abandoned cemetery | `abandoned_cemetery` | |
 | Tower dungeon | `tower_dungeon` | Ravens like to gather around it |
 | Spider den | `spider_den` | Buried; only the entrance shows |
 | Climber's Fall | `climbers_fall` | Ice spikes and other frozen biomes; a frozen adventurer, a hidden powder snow drop and a stray spawner in an ice cave below |
+| Tower ruin | `tower_ruin` | A crumbling tower with a loot chest. Snowy plains, snowy taiga, grove, snowy slopes and ice spikes |
+| Frozen tomb | `frozen_tomb` | Sunk into the ground, with a tomb chest and a coffin chest. Snowy plains |
 | Village gallows | `village/plains/village_gallows` | Added to plains, desert, savanna, snowy and taiga villages, with a palette matching each style |
 
 All structures are data driven (jigsaw structures, template pools, structure sets and biome tags
@@ -21,6 +23,10 @@ village house pools when a server starts (`GallowsInjector`).
 Climber's Fall has 4 surface layouts and 2 cave layouts that connect at random, so the drop is never
 in quite the same spot. Its biome tag includes Biomes O' Plenty's tundra, auroral garden and snowy
 fir clearing when that mod is installed.
+
+The tower ruin and frozen tomb also spawn in Biomes O' Plenty's snowy biomes when that mod is installed
+(tower ruin: tundra, snowy coniferous forest, snowy fir clearing, snowy maple woods, auroral garden;
+frozen tomb: tundra, snowy fir clearing).
 
 ## Creatures and blocks
 
@@ -53,7 +59,9 @@ Mods screen. Sections, in order:
 3. **`tree_cobwebs`** and **`pumpkin_cobwebs`**: on/off and chance.
 4. **`structures`**:
    - `gallowsWeight`: spawn weight of the gallows in villages. `0` disables it. Vanilla houses are about 2-4.
-   - Per structure (`abandoned_house`, `tower_dungeon`, `spider_den`, `abandoned_cemetery`, `climbers_fall`):
+   - `minStructureDistance`: keeps this mod's structures at least this many chunks apart (default `4`). When two would
+     be too close, the one listed first below wins. Villages and other mods are not affected. `0` turns it off.
+   - Per structure (`abandoned_house`, `tower_dungeon`, `spider_den`, `abandoned_cemetery`, `climbers_fall`, `tower_ruin`, `frozen_tomb`):
      - `chance`: chance (0.0 to 1.0) that a grid spot actually gets the structure. `-1` uses the data file value.
      - `spacing`: average grid size in chunks. Bigger means rarer. `0` uses the data file value.
      - `separation`: minimum gap in chunks inside a grid cell. Must be smaller than `spacing`. `0` uses the data file value.
