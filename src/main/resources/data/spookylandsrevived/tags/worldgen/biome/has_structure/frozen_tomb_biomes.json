@@ -2,8 +2,13 @@
   "replace": false,
   "values": [
     { "id": "minecraft:snowy_plains", "required": false },
+    { "id": "minecraft:snowy_taiga", "required": false },
+    { "id": "minecraft:ice_spikes", "required": false },
+    { "id": "minecraft:grove", "required": false },
 
     { "id": "biomesoplenty:tundra", "required": false },
-    { "id": "biomesoplenty:snowy_fir_clearing", "required": false }
+    { "id": "biomesoplenty:snowy_coniferous_forest", "required": false },
+    { "id": "biomesoplenty:snowy_fir_clearing", "required": false },
+    { "id": "biomesoplenty:snowy_maple_woods", "required": false }
   ]
 }
